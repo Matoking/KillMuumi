@@ -11,8 +11,20 @@ KillMuumi.IntroState.prototype = {
                                 {
                                     font: "24px",
                                     align: "center",
-                                    color: "white"
+                                    fill: "white"
                                 });
+                                
+        this.text2 = this.add.text(this.world.centerX,
+                                  this.world.centerY + 200,
+                                  "Paina X aloittaaksesi",
+                                  {
+                                      font: "36px",
+                                      align: "center",
+                                      fill: "white"
+                                  });
+                                
+        this.text.anchor.setTo(0.5, 0.5);
+        this.text2.anchor.setTo(0.5, 0.7);
     },
 
     /*
