@@ -1,55 +1,59 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-game", {
     preload: preload,
-    create: create,
-    update: update,
-    render: render
+    create: create
 });
 
-var player;
+function preload () {
+    this.load.image('testiKuva', 'assets/img/shite.png');
+    this.load.image('player', 'assets/img/sankari.png');
+};
 
-/*
- * Pelin tiedostot (kuvat, äänet, etc.) esiladataan tässä
- */
-function preload() {
-    game.load.image('testiKuva', 'assets/img/shite.png');
-}
-
-/*
- * Peli luodaan tiedostojen lataamisen jälkeen tässä
- */
 function create() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    
-    game.state.backgroundColor = "#55FFAA";
-    
-    player = game.add.sprite(40, 40, "testiKuva");
-    game.physics.enable(player, Phaser.Physics.ARCADE);
+    game.state.add("IntroState", KillMuumi.IntroState);
+    game.state.add("GameState", KillMuumi.GameState);
+
+    game.state.start("IntroState");
 }
 
-/*
- * Peliä päivitetään n. 60 kertaa sekunnissa tässä
- */
-function update() {
-    if (game.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
-        player.body.velocity.x = -80;
-    } else if (game.input.keyboard.isDown(Phaser.KeyCode.RIGHT)) {
-        player.body.velocity.x = 80;
-    } else {
-        player.body.velocity.x = 0;
-    }
-    
-    if (game.input.keyboard.isDown(Phaser.KeyCode.UP)) {
-        player.body.velocity.y = -80;
-    } else if (game.input.keyboard.isDown(Phaser.KeyCode.DOWN)) {
-        player.body.velocity.y = 80;
-    } else {
-        player.body.velocity.y = 0;
-    }
+function startGame() {
+    game.state.start("GameState");
 }
 
-/*
- * Ylimääräiset renderöinnit tähän
- */
-function render() {
-    
-}
+KillMuumi = {};
+KillMuumi.GameState = function() {};
+
+KillMuumi.GameState.prototype = {
+    /*
+     * Peli luodaan tiedostojen lataamisen jälkeen tässä
+     */
+    create: function() {
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+
+        this.state.backgroundColor = "#55FFAA";
+
+        this.player = this.add.sprite(40, 40, "player");
+        
+        this.physics.enable(this.player, Phaser.Physics.ARCADE);
+    },
+
+    /*
+     * Peliä päivitetään n. 60 kertaa sekunnissa tässä
+     */
+    update: function() {
+        if (this.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
+            this.player.body.velocity.x = -80;
+        } else if (this.input.keyboard.isDown(Phaser.KeyCode.RIGHT)) {
+            this.player.body.velocity.x = 80;
+        } else {
+            this.player.body.velocity.x = 0;
+        }
+
+        if (this.input.keyboard.isDown(Phaser.KeyCode.UP)) {
+            this.player.body.velocity.y = -80;
+        } else if (this.input.keyboard.isDown(Phaser.KeyCode.DOWN)) {
+            this.player.body.velocity.y = 80;
+        } else {
+            this.player.body.velocity.y = 0;
+        }
+    }
+};
