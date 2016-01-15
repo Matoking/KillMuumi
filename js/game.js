@@ -7,7 +7,10 @@ function preload () {
     this.load.image('testiKuva', 'assets/img/shite.png');
     this.load.image('player', 'assets/img/sankari.png');
     this.load.image('laser', 'assets/img/laaseri.png');
-    this.load.image('map', 'assets/img/map.png');
+    
+    this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
+    
+    this.load.tilemap("map", "assets/maps/map.json", null, Phaser.Tilemap.TILED_JSON);
     
     this.load.spritesheet('clock', 'assets/img/kelloanimoitu.png', 32, 32);
 };
@@ -33,11 +36,14 @@ KillMuumi.GameState.prototype = {
     create: function() {
         game.scale.scaleFactor = 2;
         
+        this.mapLoader = new MapLoader();
+        this.mapLoader.loadMap("map");
+        
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.stage.backgroundColor = "#55FFAA";
 
-        this.player = new Player();
+        this.player = new Player(320, 400);
         
         this.playerLaserTimer = 0;
         
@@ -60,9 +66,6 @@ KillMuumi.GameState.prototype = {
         this.levelObstacles = this.add.physicsGroup();
         
         this.clock = new Clock(25,25);
-        
-        this.mapLoader = new MapLoader();
-        this.mapLoader.loadMap("map");
     },
     
     shootLaser: function() {
@@ -70,8 +73,8 @@ KillMuumi.GameState.prototype = {
         this.playerLasers.add(laser);
         
         laser.body.allowGravity = false;
-        laser.body.velocity.x = this.playerDirection == "right" ? 700 : -700;
-        laser.x += this.playerDirection == "right" ? 30 : -20;
+        laser.body.velocity.x = this.playerDirection === "right" ? 700 : -700;
+        laser.x += this.playerDirection === "right" ? 30 : -20;
         laser.outOfBoundsKill = true;
     },
 
@@ -79,7 +82,7 @@ KillMuumi.GameState.prototype = {
      * Peliä päivitetään n. 60 kertaa sekunnissa tässä
      */
     update: function() {
-        this.physics.arcade.collide(this.player, this.obstacle);
+        game.physics.arcade.collide(this.player.sprite, this.mapLayer);
         
         this.player.update();
     }
