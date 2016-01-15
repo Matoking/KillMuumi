@@ -5,11 +5,13 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-game", {
     render: render
 });
 
+var player;
+
 /*
  * Pelin tiedostot (kuvat, äänet, etc.) esiladataan tässä
  */
 function preload() {
-    
+    game.load.image('testiKuva', 'assets/img/shite.png');
 }
 
 /*
@@ -17,6 +19,8 @@ function preload() {
  */
 function create() {
     game.state.backgroundColor = "#55FFAA";
+    
+    player = game.add.sprite(40, 40, "testiKuva");
 }
 
 /*
