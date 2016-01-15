@@ -9,6 +9,8 @@ function preload () {
     this.load.image('laser', 'assets/img/laaseri.png');
     
     this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
+    this.load.spritesheet('sprites', 'assets/img/SpriteSheet.png', 32, 32);
+    this.load.spritesheet('bullets', 'assets/img/bullets.png', 8, 4);
     
     this.load.tilemap("map", "assets/maps/map.json", null, Phaser.Tilemap.TILED_JSON);
     
@@ -65,7 +67,12 @@ KillMuumi.GameState.prototype = {
         
         this.levelObstacles = this.add.physicsGroup();
         
+        this.moomins = this.add.physicsGroup();
+        this.enemyBullets = this.add.physicsGroup();
+        
         this.clock = new Clock(25,25);
+        
+        this.moomin = new Moomin(500, 500);
     },
     
     shootLaser: function() {
@@ -83,6 +90,9 @@ KillMuumi.GameState.prototype = {
      */
     update: function() {
         game.physics.arcade.collide(this.player.sprite, this.mapLayer);
+        
+        this.moomin.update();
+        this.enemyBullets.update();
         
         this.player.update();
     }
