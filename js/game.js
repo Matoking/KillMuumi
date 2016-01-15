@@ -6,6 +6,10 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-game", {
 function preload () {
     this.load.image('testiKuva', 'assets/img/shite.png');
     this.load.image('player', 'assets/img/sankari.png');
+    this.load.image('laser', 'assets/img/laaseri.png');
+    this.load.image('map', 'assets/img/map.png');
+    
+    this.load.spritesheet('clock', 'assets/img/kelloanimoitu.png', 32, 32);
 };
 
 function create() {
@@ -27,32 +31,48 @@ KillMuumi.GameState.prototype = {
      * Peli luodaan tiedostojen lataamisen jälkeen tässä
      */
     create: function() {
+        game.scale.scaleFactor = 2;
+        
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.state.backgroundColor = "#55FFAA";
+        this.stage.backgroundColor = "#55FFAA";
 
-        this.player = this.add.sprite(40, 40, "player");
-        this.player.anchor.setTo(0.5, 0.5);
+        this.player = new Player();
+        
+        this.playerLaserTimer = 0;
+        
+        this.playerDirection = "right";
         
         this.physics.arcade.gravity.y = 800;
-        
-        this.camera.follow(this.player);
         
         this.world.height = 3000;
         this.world.width = 1200;        
         
-        this.obstacle = this.add.sprite(40,400, "testiKuva");
+        this.obstacle = this.add.sprite(40,400, "map");
         
-        this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.physics.enable(this.obstacle, Phaser.Physics.ARCADE);
         
-        this.player.body.collideWorldBounds = true;
         this.obstacle.body.collideWorldBounds = true;
         
         this.obstacle.body.allowGravity = false;
         this.obstacle.body.immovable = true;
         
         this.levelObstacles = this.add.physicsGroup();
+        
+        this.clock = new Clock(25,25);
+        
+        this.mapLoader = new MapLoader();
+        this.mapLoader.loadMap("map");
+    },
+    
+    shootLaser: function() {
+        var laser = this.make.sprite(this.player.x, this.player.y, "laser");
+        this.playerLasers.add(laser);
+        
+        laser.body.allowGravity = false;
+        laser.body.velocity.x = this.playerDirection == "right" ? 700 : -700;
+        laser.x += this.playerDirection == "right" ? 30 : -20;
+        laser.outOfBoundsKill = true;
     },
 
     /*
@@ -61,19 +81,6 @@ KillMuumi.GameState.prototype = {
     update: function() {
         this.physics.arcade.collide(this.player, this.obstacle);
         
-        if (this.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
-            this.player.body.velocity.x = -400;
-            this.player.scale.x = -1;
-        } else if (this.input.keyboard.isDown(Phaser.KeyCode.RIGHT)) {
-            this.player.body.velocity.x = 400;
-            this.player.scale.x = 1;
-        } else {
-            this.player.body.velocity.x = 0;
-        }
-        
-        if (this.input.keyboard.isDown(Phaser.KeyCode.UP) && 
-           (this.player.body.touching.down || this.player.body.onFloor())) {
-            this.player.body.velocity.y = -400;
-        }
+        this.player.update();
     }
 };
