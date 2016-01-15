@@ -10,6 +10,7 @@ function preload () {
     
     this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
     this.load.spritesheet('sprites', 'assets/img/SpriteSheet.png', 32, 32);
+    this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
     this.load.spritesheet('bullets', 'assets/img/bullets.png', 8, 4);
     
     this.load.tilemap("map", "assets/maps/map.json", null, Phaser.Tilemap.TILED_JSON);
@@ -90,6 +91,7 @@ KillMuumi.GameState.prototype = {
      */
     update: function() {
         game.physics.arcade.collide(this.player.sprite, this.mapLayer);
+        game.physics.arcade.collide(this.moomins, this.mapLayer);
         
         this.moomin.update();
         this.enemyBullets.update();
