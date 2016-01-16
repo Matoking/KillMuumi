@@ -6,11 +6,14 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-game", {
 function preload() {
     this.load.image('testiKuva', 'assets/img/shite.png');
     this.load.image('laser', 'assets/img/laaseri.png');
+    this.load.image('player_head', 'assets/img/sankaripaa.png');
+    this.load.image('elamapalkki', 'assets/img/elamapalkki.png');
+    this.load.image('elamapalkki_tayte', 'assets/img/elamapalkki_tayte.png');
 
     this.load.spritesheet('tiles', 'assets/img/tilet.png', 32, 32);
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
     this.load.spritesheet('moomin_gibs', 'assets/img/muuminpalaset.png', 8, 8);
-    this.load.spritesheet('player_gibs', 'assets/img/muuminpalaset.png', 8, 8);
+    this.load.spritesheet('player_gibs', 'assets/img/pelaajanpalaset.png', 8, 8);
 
     this.load.spritesheet('bullets', 'assets/img/bullets.png', 8, 4);
 
@@ -44,6 +47,9 @@ KillMuumi.GameState.prototype = {
      * Peli luodaan tiedostojen lataamisen jälkeen tässä
      */
     create: function () {
+        this.time.advancedTiming = true;
+        this.time.desiredFps = 60;
+        
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.stage.backgroundColor = "#55FFAA";
@@ -66,8 +72,6 @@ KillMuumi.GameState.prototype = {
         
         this.backgroundLayer = null;
         this.mapLayer = null;
-        
-        this.levelObstacles = this.add.physicsGroup();
 
         this.mapLoader = new MapLoader();
         this.mapLoader.loadMap("map");
@@ -76,9 +80,11 @@ KillMuumi.GameState.prototype = {
 
         this.enemyBullets = this.add.physicsGroup();
         
-        for (var i=0; i < 10; i++) {
+        this.powerups = this.add.physicsGroup();
+        
+        for (var i=0; i < 50; i++) {
             var moomin = new Moomin(Math.random() * 800,
-                                    Math.random() * 1000);
+                                    -2000);
             this.moomins.add(moomin);
         }
 
@@ -101,21 +107,33 @@ KillMuumi.GameState.prototype = {
         this.playerGibs.bounce.setTo(0.7, 0.7);
         
         this.playerHeadGibs = this.add.emitter(0,0, "player_head", 1);
-        this.playerHeadGibs.makeParticles("player_gibs", [0,1,2,3], 50, true, true);
+        this.playerHeadGibs.makeParticles("player_head", [0], 1, true, true);
         
         this.playerHeadGibs.minParticleSpeed.setTo(-300, -50);
-        this.playerGibs.maxParticleSpeed.setTo(300, -700);
-        this.playerGibs.gravity = 800;
-        this.playerGibs.angularDrag = 30;
-        this.playerGibs.bounce.setTo(0.7, 0.7);
+        this.playerHeadGibs.maxParticleSpeed.setTo(300, -700);
+        this.playerHeadGibs.gravity = 600;
+        this.playerHeadGibs.angularDrag = 90;
+        this.playerHeadGibs.particleDrag = 90;
+        this.playerHeadGibs.bounce.setTo(0.8, 0.8);
         
+        this.lifeBarFill = game.add.sprite(29, 25, "elamapalkki_tayte");
+        this.lifeBarFill.fixedToCamera = true;
         
-        this.moominSpawn = 0;
+        this.lifeBar = game.add.sprite(25, 25, "elamapalkki");
+        this.lifeBar.fixedToCamera = true;
+        
+        var burana = new Burana(0,900);
+        this.powerups.add(burana);
     },
     
     bulletHitMoomin: function (bullet, moomin) {
         moomin.damage(25);
         bullet.kill();
+    },
+    
+    bulletHitPlayer: function(player, bullet) {
+        bullet.kill();
+        this.player.health -= 40;
     },
     
     killBullets: function (bullet, somethingElse) {
@@ -124,6 +142,19 @@ KillMuumi.GameState.prototype = {
 
     moominTouchPlayer: function(player, moomin) {
         moomin.die();
+        this.player.health -= 250;
+    },
+    
+    playerTouchPowerup: function(player, powerup) {
+        if (powerup.powerupType === "burana") {
+            this.player.health += 330;
+            
+            if (this.player.health > 1000) {
+                this.player.health = 1000;
+            }
+        }
+        
+        powerup.kill();
     },
 
     /*
@@ -141,20 +172,16 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.collide(this.playerGibs, this.mapLayer);
         game.physics.arcade.collide(this.playerGibs, this.levelObstacles);
+        
+        game.physics.arcade.collide(this.playerHeadGibs, this.mapLayer);
+        game.physics.arcade.collide(this.playerHeadGibs, this.levelObstacles);
 
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
         
+        game.physics.arcade.overlap(this.enemyBullets, this.player.sprite, this.bulletHitPlayer, null, this);
+        
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
-
-
-
-        this.moomin.update();
-
-        this.moomins.update();
-
-        if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
-            this.moomin.die();
-        }
+        game.physics.arcade.overlap(this.player.sprite, this.powerups, this.playerTouchPowerup, null, this);
 
         this.moomins.update();
         
@@ -162,5 +189,19 @@ KillMuumi.GameState.prototype = {
         this.moominGibs.update();
 
         this.player.update();
+        
+        this.lifeBarFill.width = Math.max(0, 192 * (this.player.health / 1000));
+        
+        if (this.player.dead && game.input.keyboard.isDown(Phaser.KeyCode.X)) {
+            game.state.start("GameState");
+        }
+        
+        if (game.input.keyboard.isDown(Phaser.KeyCode.V)) {
+            game.time.slowMotion = 4.0;
+        }
+        
+        if (game.input.keyboard.isDown(Phaser.KeyCode.B)) {
+            game.time.slowMotion = 1.0;
+        }
     }
 };

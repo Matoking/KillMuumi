@@ -18,6 +18,10 @@ function Player(x, y) {
     this.laserTimer = 0;
     
     this.lasers = game.add.physicsGroup();
+    
+    this.health = 1000;
+    
+    this.dead = false;
 }
 
 Player.prototype = {
@@ -27,13 +31,21 @@ Player.prototype = {
         state.playerGibs.x = this.sprite.x + 16;
         state.playerGibs.y = this.sprite.y + 16;
         
+        state.playerHeadGibs.x = this.sprite.x + 16;
+        state.playerHeadGibs.y = this.sprite.y + 16;
+        
         state.playerGibs.start(true, 9000, 0, 20);
+        state.playerHeadGibs.start(true, 900000, 0, 20);
         
         this.sprite.kill();
+        
+        this.dead = true;
+        
+        game.camera.follow(state.playerHeadGibs);
     },
     
     shootLaser: function() {
-        var laser = game.make.sprite(this.sprite.x, this.sprite.y, "laser");
+        var laser = game.make.sprite(this.sprite.x, this.sprite.y, "bullets");
         this.lasers.add(laser);
         
         laser.body.allowGravity = false;
@@ -52,13 +64,18 @@ Player.prototype = {
     },
     
     update: function() {
+        if (this.dead) {
+            return;
+        }
+        
         var state = game.state.getCurrentState();
         
         game.physics.arcade.collide(this.lasers, state.mapLayer, this.laserMapOverlap, null, this);
         game.physics.arcade.overlap(this.lasers, state.moomins, this.laserMoominOverlap, null, this);
         
-        if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
+        if (this.health <= 0) {
             this.die();
+            return;
         }
         
         
@@ -79,30 +96,12 @@ Player.prototype = {
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.UP) && 
            (this.sprite.body.touching.down || this.sprite.body.onFloor())) {
-            this.sprite.body.velocity.y = -280;
+            this.sprite.body.velocity.y = -350;
         }
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.X) && game.time.now > this.laserTimer + 500) {
             this.laserTimer = game.time.now;
             this.shootLaser();
-        }
-        
-        // Handle the stairs here somehow
-        if (this.sprite.body.deltaY() >= 0) {
-            var mapData = state.mapLayer.getTiles(this.sprite.x - (this.sprite.x % 32),
-                                                  this.sprite.y - (this.sprite.y % 32) + 8,
-                                                  32, 32,
-                                                  false, false);
-            
-            for (var i=0; i < mapData.length; i++) {
-                var t = mapData[i];
-                
-                console.log(t.properties);
-                
-                if ("slope" in t.properties && t.properties.slope === "2") {
-                    this.sprite.y = t.worldY - (this.sprite.x % 32) + 5;
-                }
-            }
         }
     }
 };

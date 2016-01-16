@@ -1,10 +1,16 @@
 function Burana(x, y) {
-    this.sprite = game.make.sprite(x, y, "burana");
+    Phaser.Sprite.call(this, game, x, y, "burana");
     
-    this.sprite.animations.add("idle", [0,1,2,3], 8, true);
-    this.sprite.animations.play("idle");
+    this.animations.add("idle", [0,1,2,3], 8, true);
+    this.animations.play("idle");
     
-    var state = game.state.getCurrentState();
-    state.levelObstacles.add(this.sprite);
+    game.physics.arcade.enable(this);
+    
+    this.body.allowGravity = false;
+    this.body.immovable = true;
+    
+    this.powerupType = "burana";
 }
 
+Burana.prototype = Object.create(Phaser.Sprite.prototype);
+Burana.prototype.constructor = Burana;

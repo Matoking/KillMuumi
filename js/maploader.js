@@ -12,6 +12,8 @@ MapLoader.prototype = {
 
         state.mapLayer = state.map.createLayer("Main Layer");
         state.mapLayer.resizeWorld();
+        
+        state.levelObstacles = game.add.physicsGroup();
 
         state.map.setCollision([0,1,2,3,4,8,11,13,14,16,17,18], true, "Main Layer");
 
@@ -48,6 +50,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "takka":
                     var takka = game.make.sprite(objectX, objectY, "takka");
@@ -66,7 +69,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
-
+                    break;
 
                 case "hella":
                     var hella = game.make.sprite(objectX, objectY + 8, "hella");
@@ -82,6 +85,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "amme":
                     var amme = game.make.sprite(objectX, objectY, "amme");
@@ -97,6 +101,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "keittiokaappi":
                     var keittiokaappi = game.make.sprite(objectX, objectY, "keittiokaappi");
@@ -112,6 +117,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "kirjahylly":
                     var kirjahylly = game.make.sprite(objectX, objectY, "kirjahylly");
@@ -127,6 +133,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "laatikko":
                     var laatikko = game.make.sprite(objectX, objectY, "laatikko");
@@ -142,6 +149,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "pesukone":
                     var pesukone = game.make.sprite(objectX, objectY, "pesukone");
@@ -157,6 +165,8 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
+                    
                 case "poyta":
                     var poyta = game.make.sprite(objectX, objectY, "poyta");
 
@@ -171,6 +181,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
 
                 case "sanky":
@@ -187,6 +198,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "taululaiva":
                     var taululaiva = game.make.sprite(objectX, objectY, "taululaiva");
@@ -202,6 +214,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
 
                 case "taulumetsa":
@@ -218,6 +231,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "tietokonepoyta":
                     var tietokonepoyta = game.make.sprite(objectX, objectY, "tietokonepoyta");
@@ -233,6 +247,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "tuoli":
                     var tuoli = game.make.sprite(objectX, objectY, "tuoli");
@@ -248,6 +263,8 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
+                    
                 case "vaatekaappi":
                     var vaatekaappi = game.make.sprite(objectX, objectY, "vaatekaappi");
 
@@ -262,6 +279,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
 
                 case "wc":
                     var wc = game.make.sprite(objectX, objectY, "wc");
@@ -277,7 +295,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
-
+                    break;
 
                 case "wcpeili":
                     var wcpeili = game.make.sprite(objectX, objectY, "wcpeili");
@@ -293,9 +311,6 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
-
-
-
                     break;
 
 

@@ -15,12 +15,12 @@
  </tileset>
  <layer name="Background Layer" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt0UEKACAIRFEPEN3/uO2DSLApJv4Dt37BCAAAALzSBePUV9zg1j99h0O/iSZL1c/e8FN/3nurv9qr7u/2qvvV/w+xcw1B
+   eJztlLENwCAMBBkgSsH+w9LEjeUg7Fif5k76lnuMxRgAAAAAoGY+uV1mQ7I9fIevydLdIYvN/S+/0dWhStccTu9azRUku//RGdX4Tkp/NA+V39z+XIX/7Z0V/t2enfpV/3vEAo5uDms=
   </data>
  </layer>
  <layer name="Main Layer" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt1L0KwCAMBGCt4OjQ93/YLi2IpKaaS5Ze4CaH7/CvJN85lPVCnz59+vTp06f/Q/+8M04GZMWXOlhn1Ud32PGRHXZ9VAeLj+jwxbfcb2n6/tHvf9y/SF86P833tKP82f3V/OpoP36dpCXMP/+WpuQCAjkFsA==
+   eJzt1LEKwCAMBFCt4NjB///YUohQxKaJSVx6BzcJvhvEkmJzfJwX+PDhw4cPHz78H/qZOiY7VOI36myDNRo/YoPW996w4ntuWPW9Nlj8voHrLNr375nbfO7f6Y+2xI+0d/lvtsSvgXb3K9Mz2f53zm50P9cLBBsFsA==
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="32" height="32">
