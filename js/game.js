@@ -11,6 +11,8 @@ function preload () {
     this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
     this.load.spritesheet('sprites', 'assets/img/SpriteSheet.png', 32, 32);
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
+    this.load.spritesheet('moomin_gibs', 'assets/img/muuminpalaset.png', 8, 8);
+    
     this.load.spritesheet('bullets', 'assets/img/bullets.png', 8, 4);
 
     this.load.tilemap("map", "assets/maps/map.json", null, Phaser.Tilemap.TILED_JSON);
@@ -60,13 +62,27 @@ KillMuumi.GameState.prototype = {
         this.levelObstacles = this.add.physicsGroup();
 
         this.moomins = this.add.physicsGroup();
+        
         this.enemyBullets = this.add.physicsGroup();
 
         this.moomin = new Moomin(500, 500);
 
         this.mapLoader = new MapLoader();
         this.mapLoader.loadMap("map");
-
+        
+        this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 50);
+        this.moominGibs.makeParticles("moomin_gibs", [0,1,2,3], 50, true, true);
+        
+        this.moominGibs.minParticleSpeed.setTo(-300, -50);
+        this.moominGibs.maxParticleSpeed.setTo(300, -700);
+        this.moominGibs.gravity = 800;
+        this.moominGibs.angularDrag = 30;
+        this.moominGibs.bounce.setTo(0.7, 0.7);
+    },
+    
+    bulletHitMoomin: function(bullet, moomin) {
+        moomin.damage(25);
+        bullet.kill();
     },
     
     killBullets: function(bullet, somethingElse) {
@@ -83,10 +99,19 @@ KillMuumi.GameState.prototype = {
         game.physics.arcade.collide(this.moomins, this.mapLayer);
         game.physics.arcade.collide(this.moomins, this.levelObstacles);
         
+        game.physics.arcade.collide(this.moominGibs, this.mapLayer);
+        game.physics.arcade.collide(this.moominGibs, this.levelObstacles);
+        
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
 
         this.moomin.update();
+        
+        if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
+            this.moomin.die();
+        }
+        
         this.enemyBullets.update();
+        this.moominGibs.update();
 
         this.player.update();
     }

@@ -21,8 +21,8 @@ Player.prototype = {
         this.lasers.add(laser);
         
         laser.body.allowGravity = false;
-        laser.body.velocity.x = this.direction == "right" ? 700 : -700;
-        laser.x += this.direction == "right" ? 30 : -20;
+        laser.body.velocity.x = this.direction === "right" ? 700 : -700;
+        laser.x += this.direction === "right" ? 30 : -20;
         laser.outOfBoundsKill = true;
     },
     
@@ -30,10 +30,17 @@ Player.prototype = {
         laser.kill();
     },
     
+    laserMoominOverlap: function(laser, moomin) {
+        laser.kill();
+        moomin.damage(25);
+    },
+    
     update: function() {
         var state = game.state.getCurrentState();
         
         game.physics.arcade.collide(this.lasers, state.mapLayer, this.laserMapOverlap, null, this);
+        game.physics.arcade.overlap(this.lasers, state.moomins, this.laserMoominOverlap, null, this);
+        
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
             this.sprite.body.velocity.x = -400;
