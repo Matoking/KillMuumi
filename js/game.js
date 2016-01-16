@@ -96,14 +96,11 @@ KillMuumi.GameState.prototype = {
     killBullets: function (bullet, somethingElse) {
         bullet.kill();
     },
-<<<<<<< HEAD
-=======
-    
+
     moominTouchPlayer: function(player, moomin) {
         moomin.die();
     },
 
->>>>>>> 70c2d9ecf7835eda578724fc721caa41b2aea463
     /*
      * Peliä päivitetään n. 60 kertaa sekunnissa tässä
      */
@@ -121,13 +118,11 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
-<<<<<<< HEAD
+
         this.moomin.update();
 
-=======
         this.moomins.update();
-        
->>>>>>> 70c2d9ecf7835eda578724fc721caa41b2aea463
+
         if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
             this.moomin.die();
         }
