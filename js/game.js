@@ -9,6 +9,7 @@ function preload() {
     this.load.image('player_head', 'assets/img/sankaripaa.png');
     this.load.image('elamapalkki', 'assets/img/elamapalkki.png');
     this.load.image('elamapalkki_tayte', 'assets/img/elamapalkki_tayte.png');
+    this.load.image('valahdys', 'assets/img/valahdys.png');
 
     this.load.spritesheet('tiles', 'assets/img/tilet.png', 32, 32);
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
@@ -86,14 +87,17 @@ KillMuumi.GameState.prototype = {
         
         this.powerups = this.add.physicsGroup();
         
+        var nuke = new Nuke(0, 2000);
+        this.powerups.add(nuke);
+        
         for (var i = 0; i < 10; i++) {
             var moomin = new Moomin(Math.random() * 800,
                     Math.random() * 1000);
             this.moomins.add(moomin);
         }
 
-        this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 150);
-        this.moominGibs.makeParticles("moomin_gibs", [0, 1, 2, 3], 50, true, true);
+        this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 200);
+        this.moominGibs.makeParticles("moomin_gibs", [0, 1, 2, 3], 200, true, true);
 
         this.moominGibs.minParticleSpeed.setTo(-300, -50);
         this.moominGibs.maxParticleSpeed.setTo(300, -700);
@@ -138,7 +142,23 @@ KillMuumi.GameState.prototype = {
         this.playerGibs.angularDrag = 30;
         this.playerGibs.bounce.setTo(0.7, 0.7);
         
+        this.gameOverText = this.add.text(180, 300,
+                                          "Sinä kuolit!\nPaina R yrittääksesi uudelleen.",
+                                          {
+                                              font: "28px monospace",
+                                              align: "center",
+                                              fill: "white"
+                                          });
+        this.gameOverText.fixedToCamera = true;
+        this.gameOverText.visible = false;
+        
+        
+        this.nukeFlash = this.add.image(0, 0, "valahdys");
+        this.nukeFlash.visible = false;
+        this.nukeFlash.fixedToCamera = true;
+        
         this.nukeTimer = 0;
+        this.nukeActive = true;
     },
             
     bulletHitMoomin: function (bullet, moomin) {
@@ -167,6 +187,18 @@ KillMuumi.GameState.prototype = {
             if (this.player.health > 1000) {
                 this.player.health = 1000;
             }
+        } else if (powerup.powerupType === "nuke") {
+            this.time.slowMotion = 4.0;
+            
+            this.nukeActive = true;
+            this.nukeTimer = game.time.now;
+            
+            this.moomins.forEach(function(moomin) {
+                moomin.die();
+            });
+            
+            this.nukeFlash.visible = true;
+            this.add.tween(this.nukeFlash).to({alpha: 1}, 1500, Phaser.Easing.Linear.None, true, 0, 1000, true);
         }
         
         powerup.kill();
@@ -207,7 +239,11 @@ KillMuumi.GameState.prototype = {
         
         this.lifeBarFill.width = Math.max(0, 192 * (this.player.health / 1000));
         
-        if (this.player.dead && game.input.keyboard.isDown(Phaser.KeyCode.X)) {
+        if (this.player.dead) {
+            this.gameOverText.visible = true;
+        }
+        
+        if (this.player.dead && game.input.keyboard.isDown(Phaser.KeyCode.R)) {
             game.state.start("GameState");
         }
         
@@ -217,6 +253,13 @@ KillMuumi.GameState.prototype = {
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.B)) {
             game.time.slowMotion = 1.0;
+        }
+        
+        if (this.nukeActive && game.time.now > this.nukeTimer + 1500) {
+            this.nukeActive = false;
+            this.time.slowMotion = 1.0;
+            
+            this.nukeFlash.visible = false;
         }
     }
 };

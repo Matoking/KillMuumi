@@ -9,7 +9,7 @@ KillMuumi.IntroState.prototype = {
                                   this.world.centerY, 
                                   "KillMuumi\nVuosisadan Muumitapposimulaattori",
                                 {
-                                    font: "24px",
+                                    font: "24px monospace",
                                     align: "center",
                                     fill: "white"
                                 });
@@ -18,7 +18,7 @@ KillMuumi.IntroState.prototype = {
                                   this.world.centerY + 200,
                                   "Paina X aloittaaksesi",
                                   {
-                                      font: "36px",
+                                      font: "36px monospace",
                                       align: "center",
                                       fill: "white"
                                   });

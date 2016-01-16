@@ -22,6 +22,9 @@ function Player(x, y) {
     this.health = 1000;
     
     this.dead = false;
+    
+    this.shotgunTimer = 0;
+    this.minigunTimer = 0;
 }
 
 Player.prototype = {
