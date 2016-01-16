@@ -176,6 +176,113 @@ MapLoader.prototype = {
                         down: false
                     };
 
+                case "taululaiva":
+                    var taululaiva = game.make.sprite(objectX, objectY, "taululaiva");
+
+                    state.levelObstacles.add(taululaiva);
+
+                    taululaiva.body.allowGravity = false;
+                    taululaiva.body.immovable = true;
+
+                    taululaiva.body.checkCollision = {
+                        up: false,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
+
+                case "taulumetsa":
+                    var taulumetsa = game.make.sprite(objectX, objectY, "taulumetsa");
+
+                    state.levelObstacles.add(taulumetsa);
+
+                    taulumetsa.body.allowGravity = false;
+                    taulumetsa.body.immovable = true;
+
+                    taulumetsa.body.checkCollision = {
+                        up: false,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
+                case "tietokonepoyta":
+                    var tietokonepoyta = game.make.sprite(objectX, objectY, "tietokonepoyta");
+
+                    state.levelObstacles.add(tietokonepoyta);
+
+                    tietokonepoyta.body.allowGravity = false;
+                    tietokonepoyta.body.immovable = true;
+
+                    tietokonepoyta.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
+                case "tuoli":
+                    var tuoli = game.make.sprite(objectX, objectY, "tuoli");
+
+                    state.levelObstacles.add(tuoli);
+
+                    tuoli.body.allowGravity = false;
+                    tuoli.body.immovable = true;
+
+                    tuoli.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+                case "vaatekaappi":
+                    var vaatekaappi = game.make.sprite(objectX, objectY, "vaatekaappi");
+
+                    state.levelObstacles.add(vaatekaappi);
+
+                    vaatekaappi.body.allowGravity = false;
+                    vaatekaappi.body.immovable = true;
+
+                    vaatekaappi.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
+                case "wc":
+                    var wc = game.make.sprite(objectX, objectY, "wc");
+
+                    state.levelObstacles.add(wc);
+
+                    wc.body.allowGravity = false;
+                    wc.body.immovable = true;
+
+                    wc.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
+
+                case "wcpeili":
+                    var wcpeili = game.make.sprite(objectX, objectY, "wcpeili");
+
+                    state.levelObstacles.add(wcpeili);
+
+                    wcpeili.body.allowGravity = false;
+                    wcpeili.body.immovable = true;
+
+                    wcpeili.body.checkCollision = {
+                        up: false,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
+
 
                     break;
 
