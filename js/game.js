@@ -146,6 +146,16 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
+
+
+        this.moomin.update();
+
+        this.moomins.update();
+
+        if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
+            this.moomin.die();
+        }
+
         this.moomins.update();
         
         this.enemyBullets.update();
