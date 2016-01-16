@@ -1,9 +1,8 @@
 function Minigun(x, y) {
-    this.sprite = game.make.sprite(x, y, "minigun");
+    Phaser.Sprite.call(this, game, x, y, "minigun");
     
-    this.sprite.animations.add("idle", [0,1,2,3,4,5], 8, true);
-    this.sprite.animations.play("idle");
+    this.animations.add("idle", [0,1,2,3,4,5], 8, true);
+    this.animations.play("idle");
     
-    var state = game.state.getCurrentState();
-    state.levelObstacles.add(this.sprite);
+    
 }

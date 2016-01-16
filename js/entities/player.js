@@ -25,6 +25,8 @@ function Player(x, y) {
     
     this.shotgunTimer = 0;
     this.minigunTimer = 0;
+    
+    this.minigunHold = 0;
 }
 
 Player.prototype = {
@@ -48,13 +50,72 @@ Player.prototype = {
     },
     
     shootLaser: function() {
-        var laser = game.make.sprite(this.sprite.x, this.sprite.y, "bullets");
-        this.lasers.add(laser);
+        var laser = this.lasers.getFirstExists(false);
         
+        if (laser !== null) {
+            laser.revive();
+            laser.x = this.sprite.x;
+            laser.y = this.sprite.y;
+            laser.loadTexture("bullets");
+        } else {
+            laser = game.make.sprite(this.sprite.x, this.sprite.y, "bullets");
+            this.lasers.add(laser);
+        }
+        
+        laser.health = 25;
         laser.body.allowGravity = false;
         laser.body.velocity.x = this.direction === "right" ? 700 : -700;
         laser.x += this.direction === "right" ? 30 : -20;
         laser.outOfBoundsKill = true;
+    },
+    
+    shootShotgun: function() {
+        for (var i=0; i < 15; i++) {
+            var pellet = this.lasers.getFirstExists(false);
+            
+            if (pellet !== null) {
+                pellet.revive();
+                pellet.x = this.sprite.x;
+                pellet.y = this.sprite.y;
+                pellet.loadTexture("panos");
+            } else {
+                pellet = game.make.sprite(this.sprite.x, this.sprite.y, "panos");
+                this.lasers.add(pellet);
+            }
+            
+            pellet.health = 8;
+            
+            pellet.body.allowGravity = false;
+            pellet.body.velocity.x = this.direction === "right" ? 700 : -700;
+            
+            pellet.body.velocity.y = 50 - Math.ceil(Math.random() * 100);
+            
+            pellet.x += this.direction === "right" ? 30 : -20;
+            pellet.outOfBoundsKill = true;
+        }
+    },
+    
+    shootMinigun: function() {
+        var pellet = this.lasers.getFirstExists(false);
+            
+        if (pellet !== null) {
+            pellet.revive();
+            pellet.x = this.sprite.x;
+            pellet.y = this.sprite.y;
+            pellet.loadTexture("panos");
+        } else {
+            pellet = game.make.sprite(this.sprite.x, this.sprite.y, "panos");
+            this.lasers.add(pellet);
+        }
+
+        pellet.health = 8;
+        pellet.body.allowGravity = false;
+        pellet.body.velocity.x = this.direction === "right" ? 700 : -700;
+
+        pellet.body.velocity.y = 50 - Math.ceil(Math.random() * 100);
+
+        pellet.x += this.direction === "right" ? 30 : -20;
+        pellet.outOfBoundsKill = true;
     },
     
     laserMapOverlap: function(laser, map) {
@@ -102,9 +163,29 @@ Player.prototype = {
             this.sprite.body.velocity.y = -350;
         }
         
-        if (game.input.keyboard.isDown(Phaser.KeyCode.X) && game.time.now > this.laserTimer + 500) {
-            this.laserTimer = game.time.now;
-            this.shootLaser();
+        if (game.input.keyboard.isDown(Phaser.KeyCode.X)) {
+            if (this.minigunTimer < game.time.now && game.time.now > this.laserTimer + 500) {
+                this.laserTimer = game.time.now;
+
+                if (this.shotgunTimer > game.time.now) {
+                    // Use shotgun
+                    this.shootShotgun();
+                } else {
+                    this.shootLaser();
+                }
+            } else {
+                if (game.time.now > this.laserTimer + (500 - this.minigunHold)) {
+                    this.minigunHold += game.time.elapsed * 1.0;
+                    
+                    if (this.minigunHold >= 450) {
+                        this.minigunHold = 450;
+                    }
+                    
+                    this.shootMinigun();
+                }
+            }
+        } else {
+            this.minigunHold = 0;
         }
     }
 };

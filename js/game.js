@@ -10,6 +10,7 @@ function preload() {
     this.load.image('elamapalkki', 'assets/img/elamapalkki.png');
     this.load.image('elamapalkki_tayte', 'assets/img/elamapalkki_tayte.png');
     this.load.image('valahdys', 'assets/img/valahdys.png');
+    this.load.image('panos', 'assets/img/panos.png');
 
     this.load.spritesheet('tiles', 'assets/img/tilet.png', 32, 32);
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
@@ -162,7 +163,7 @@ KillMuumi.GameState.prototype = {
     },
             
     bulletHitMoomin: function (bullet, moomin) {
-        moomin.damage(25);
+        moomin.damage(bullet.health);
         bullet.kill();
     },
     
@@ -198,7 +199,7 @@ KillMuumi.GameState.prototype = {
             });
             
             this.nukeFlash.visible = true;
-            this.add.tween(this.nukeFlash).to({alpha: 1}, 1500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+            this.add.tween(this.nukeFlash).to({alpha: 1}, 250, Phaser.Easing.Linear.None, true, 0, 250, true);
         }
         
         powerup.kill();
