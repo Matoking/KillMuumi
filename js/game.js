@@ -5,7 +5,6 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-game", {
 
 function preload() {
     this.load.image('testiKuva', 'assets/img/shite.png');
-    this.load.image('player', 'assets/img/sankari.png');
     this.load.image('laser', 'assets/img/laaseri.png');
 
     this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
@@ -21,6 +20,8 @@ function preload() {
     this.load.spritesheet('burana', 'assets/img/burana.png', 31, 9);
     this.load.spritesheet('dynamiitti', 'assets/img/dynamiitti.png', 12, 5);
     this.load.spritesheet('hella', 'assets/img/hella.png', 18, 24);
+    
+    this.load.spritesheet('player', 'assets/img/sankari.png', 23, 31);
 }
 
 function create() {

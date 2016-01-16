@@ -30,13 +30,9 @@ MapLoader.prototype = {
             switch (gameObject.type) {
                 case "kello":
                     var clock = game.make.sprite(objectX, objectY, "kello");
-<<<<<<< HEAD
                     
                     clock.animations.add("idle", [0,1,2,3,4,5], 8, true);
-=======
-
                     clock.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
->>>>>>> 92007c9d157177be725c0ae912c2f424581488a8
                     clock.animations.play("idle");
 
                     state.levelObstacles.add(clock);
@@ -52,21 +48,23 @@ MapLoader.prototype = {
                     };
 
                     console.log("Clock created at " + objectX + "x" + objectY);
+                    break;
                     
                 case "hella":
                     var hella = game.make.sprite(objectX, objectY, "hella");
 
                     state.levelObstacles.add(hella);
 
-                    clock.body.allowGravity = false;
-                    clock.body.immovable = true;
+                    hella.body.allowGravity = false;
+                    hella.body.immovable = true;
 
-                    clock.body.checkCollision = {
+                    hella.body.checkCollision = {
                         up: true,
                         left: false,
                         right: false,
                         down: false
                     };
+                    break;
             }
         }
     }
