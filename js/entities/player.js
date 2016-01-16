@@ -170,12 +170,16 @@ Player.prototype = {
 
                 if (this.shotgunTimer > game.time.now) {
                     // Use shotgun
+                    state.shotgunSound.play();
+                    
                     this.shootShotgun();
                 } else {
                     this.shootLaser();
                 }
             } else {
                 if (game.time.now > this.laserTimer + (500 - this.minigunHold)) {
+                    state.minigunSound.play('', 0, 1, true, false);
+                    
                     this.minigunHold += game.time.elapsed * 1.0;
                     
                     if (this.minigunHold >= 450) {
@@ -186,6 +190,10 @@ Player.prototype = {
                 }
             }
         } else {
+            if (this.minigunHold > 0) {
+            state.minigunPauseSound.play('', 0, 1, false, false);
+            }
+            state.minigunSound.stop();
             this.minigunHold = 0;
         }
     }

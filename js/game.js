@@ -46,6 +46,10 @@ function preload() {
     this.load.audio("s_powerup", ['assets/audio/powerup.mp3']);
     this.load.audio("s_burana", ['assets/audio/burana.mp3']);
     this.load.audio("s_hit", ['assets/audio/isku.mp3']);
+    this.load.audio("s_rajahdys", ['assets/audio/rajahdys.wav']);
+    this.load.audio("s_shotgun", ['assets/audio/shotgun.mp3']);
+    this.load.audio("s_minigun", ['assets/audio/minigun-cut.mp3']);
+    this.load.audio("s_minigun_pause", ['assets/audio/minigun-pause.mp3']);
 }
 
 function create() {
@@ -73,7 +77,7 @@ KillMuumi.GameState.prototype = {
         
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.stage.backgroundColor = "#55FFAA";
+        this.stage.backgroundColor = "#00BFFF";
 
         //this.player = new Player(320, 400);
 
@@ -94,15 +98,6 @@ KillMuumi.GameState.prototype = {
         this.enemyBullets = this.add.physicsGroup();
         
         this.powerups = this.add.physicsGroup();
-        
-        var nuke = new Nuke(0, 2000);
-        this.powerups.add(nuke);
-        
-        var minigun = new Minigun(0, 1900);
-        this.powerups.add(minigun);
-        
-        var shotgun = new Shotgun(50, 1950);
-        this.powerups.add(shotgun);
         
         for (var i = 0; i < 10; i++) {
             var moomin = new Moomin(Math.random() * 800,
@@ -191,6 +186,10 @@ KillMuumi.GameState.prototype = {
         this.buranaSound = this.add.audio("s_burana");
         this.hitSound = this.add.audio("s_hit");
         this.powerupSound = this.add.audio("s_powerup");
+        this.explosionSound = this.add.audio("s_rajahdys");
+        this.shotgunSound = this.add.audio("s_shotgun");
+        this.minigunSound = this.add.audio("s_minigun");
+        this.minigunPauseSound = this.add.audio("s_minigun_pause");
         
         this.bgMusic.play('', 0, 1, true);
     },
@@ -210,6 +209,8 @@ KillMuumi.GameState.prototype = {
     },
             
     moominTouchPlayer: function (player, moomin) {
+        this.hitSound.play();
+        
         moomin.die();
         this.player.health -= 250;
     },
@@ -224,6 +225,8 @@ KillMuumi.GameState.prototype = {
                 this.player.health = 1000;
             }
         } else if (powerup.powerupType === "nuke") {
+            this.explosionSound.play();
+            
             this.time.slowMotion = 4.0;
             
             this.nukeActive = true;
@@ -291,6 +294,8 @@ KillMuumi.GameState.prototype = {
         }
         
         if (this.player.dead && game.input.keyboard.isDown(Phaser.KeyCode.R)) {
+            this.bgMusic.stop();
+            
             game.state.start("GameState");
         }
         
@@ -302,11 +307,13 @@ KillMuumi.GameState.prototype = {
             game.time.slowMotion = 1.0;
         }
         
-        if (this.nukeActive && game.time.now > this.nukeTimer + 1500) {
-            this.nukeActive = false;
-            this.time.slowMotion = 1.0;
-            
+        if (this.nukeActive && game.time.now > this.nukeTimer + 500) {
             this.nukeFlash.visible = false;
+            
+            if (game.time.now > this.nukeTimer + 1500) {
+                this.nukeActive = false;
+                this.time.slowMotion = 1.0;
+            }
         }
         
         if (this.nukeActive) {
