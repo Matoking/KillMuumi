@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
-  <image source="../img/tiles.png" width="128" height="32"/>
+  <image source="../img/tilet.png" width="256" height="96"/>
+  <tile id="9">
+   <properties>
+    <property name="slope" value="2"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="slope" value="1"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztlkEOwCAIBEH7/zd7kYuxGq2WNe4kex5IgKAiojmhkt2o4Pg9QPJ71IDUP/30008//ff4rQaCSfmfeM/KTmr/79//cAuUOlbzfAg5G5vnOJhVO1retd7+v93D2duYAEMPAPo=
+   eJzt0jEKwDAIQNG0AYcODrn/YZOhhVJIlIAu/cKfHB6CtcTOaewrPj4+Pj4+Pj4+Pv6v/GOz2Vyjdpd9/9vO9r+2x4+0s/yZ7fEl0H58WaRl//89qVEH8wQDiA==
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="32" height="32">
-  <object name="kello" type="kello" x="270" y="655">
+  <object name="kello" type="kello" x="50" y="783">
    <ellipse/>
   </object>
-  <object name="kello" type="kello" x="431" y="654">
+  <object name="kello" type="kello" x="720" y="782">
    <ellipse/>
   </object>
-  <object name="kello" type="kello" x="432" y="623">
-   <ellipse/>
-  </object>
+  <object name="player" type="player" x="52" y="971"/>
  </objectgroup>
 </map>

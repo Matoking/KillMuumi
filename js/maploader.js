@@ -8,7 +8,7 @@ MapLoader.prototype = {
         state.map = game.add.tilemap(mapName);
         state.map.addTilesetImage("tiles");
 
-        state.map.setCollisionBetween(0, 2);
+        state.map.setCollision([0, 1, 2, 3, 4, 8, 11, 13, 14, 16, 17, 18]);
 
         state.mapLayer = state.map.createLayer("Tile Layer 1");
         state.mapLayer.resizeWorld();
@@ -29,18 +29,16 @@ MapLoader.prototype = {
 
             switch (gameObject.type) {
                 case "kello":
-<<<<<<< HEAD
                     var kello = game.make.sprite(objectX, objectY, "kello");
 
                     kello.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
                     kello.animations.play("idle");
-=======
+
                     var clock = game.make.sprite(objectX, objectY, "kello");
-                    
-                    clock.animations.add("idle", [0,1,2,3,4,5], 8, true);
+
+                    clock.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
                     clock.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
                     clock.animations.play("idle");
->>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
 
                     state.levelObstacles.add(kello);
 
@@ -54,12 +52,10 @@ MapLoader.prototype = {
                         down: false
                     };
 
-<<<<<<< HEAD
-=======
+
                     console.log("Clock created at " + objectX + "x" + objectY);
                     break;
-                    
->>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
+
                 case "hella":
                     var hella = game.make.sprite(objectX, objectY, "hella");
 
@@ -74,7 +70,6 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
-<<<<<<< HEAD
 
                 case "amme":
                     var amme = game.make.sprite(objectX, objectY, "amme");
@@ -181,9 +176,13 @@ MapLoader.prototype = {
                         down: false
                     };
 
-=======
+
                     break;
->>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
+
+
+                case "player":
+                    state.player = new Player(objectX, objectY);
+                    break;
             }
         }
     }
@@ -193,4 +192,4 @@ MapLoader.prototype = {
 
 
 
-                        
+

@@ -7,8 +7,7 @@ function preload() {
     this.load.image('testiKuva', 'assets/img/shite.png');
     this.load.image('laser', 'assets/img/laaseri.png');
 
-    this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
-    this.load.spritesheet('sprites', 'assets/img/SpriteSheet.png', 32, 32);
+    this.load.spritesheet('tiles', 'assets/img/tilet.png', 32, 32);
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
     this.load.spritesheet('moomin_gibs', 'assets/img/muuminpalaset.png', 8, 8);
 
@@ -48,7 +47,7 @@ KillMuumi.GameState.prototype = {
 
         this.stage.backgroundColor = "#55FFAA";
 
-        this.player = new Player(320, 400);
+        //this.player = new Player(320, 400);
 
         this.physics.arcade.gravity.y = 800;
 
@@ -79,7 +78,7 @@ KillMuumi.GameState.prototype = {
         this.mapLoader = new MapLoader();
         this.mapLoader.loadMap("map");
 
-        this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 50);
+        this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 150);
         this.moominGibs.makeParticles("moomin_gibs", [0, 1, 2, 3], 50, true, true);
 
         this.moominGibs.minParticleSpeed.setTo(-300, -50);
@@ -121,7 +120,7 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
-<<<<<<< HEAD
+
 
         this.moomin.update();
 
@@ -131,10 +130,8 @@ KillMuumi.GameState.prototype = {
             this.moomin.die();
         }
 
-=======
         this.moomins.update();
         
->>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
         this.enemyBullets.update();
         this.moominGibs.update();
 
