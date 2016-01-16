@@ -36,8 +36,9 @@ function preload() {
     this.load.spritesheet('sanky', 'assets/img/sanky.png', 40, 15);
     this.load.spritesheet('shotgun', 'assets/img/shotgun.png', 20, 7);
     this.load.spritesheet('takka', 'assets/img/takka.png', 32, 32);
-    this.load.spritesheet('taululaiva', 'assets/img/tauluaiva.png', 21, 16);
+    this.load.spritesheet('taululaiva', 'assets/img/taululaiva.png', 21, 16);
     this.load.spritesheet('taulumetsa', 'assets/img/taulumetsa.png', 21, 17);
+    this.load.spritesheet('teevee', 'assets/img/teevee.png', 30, 33);
 }
 
 function create() {
@@ -70,18 +71,6 @@ KillMuumi.GameState.prototype = {
         //this.player = new Player(320, 400);
 
         this.physics.arcade.gravity.y = 800;
-
-        this.world.height = 3000;
-        this.world.width = 1200;
-
-        this.obstacle = this.add.sprite(40, 400, "map");
-
-        this.physics.enable(this.obstacle, Phaser.Physics.ARCADE);
-
-        this.obstacle.body.collideWorldBounds = true;
-
-        this.obstacle.body.allowGravity = false;
-        this.obstacle.body.immovable = true;
 
         this.backgroundLayer = null;
         this.mapLayer = null;
@@ -140,10 +129,10 @@ KillMuumi.GameState.prototype = {
         var burana = new Burana(0,900);
         this.powerups.add(burana);
 
-        this.playerHeadGibs = this.add.emitter(0, 0, "player_head", 1);
-        this.playerHeadGibs.makeParticles("player_gibs", [0, 1, 2, 3], 50, true, true);
+        this.playerGibs = this.add.emitter(0, 0, "player_head", 1);
+        this.playerGibs.makeParticles("player_gibs", [0, 1, 2, 3], 50, true, true);
 
-        this.playerHeadGibs.minParticleSpeed.setTo(-300, -50);
+        this.playerGibs.minParticleSpeed.setTo(-300, -50);
         this.playerGibs.maxParticleSpeed.setTo(300, -700);
         this.playerGibs.gravity = 800;
         this.playerGibs.angularDrag = 30;
