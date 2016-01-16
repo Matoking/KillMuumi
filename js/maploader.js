@@ -8,7 +8,7 @@ MapLoader.prototype = {
         state.map = game.add.tilemap(mapName);
         state.map.addTilesetImage("tiles");
 
-        state.map.setCollisionBetween(0, 2);
+        state.map.setCollision([0,1,2,3,4,8,11,13,14,16,17,18]);
 
         state.mapLayer = state.map.createLayer("Tile Layer 1");
         state.mapLayer.resizeWorld();
@@ -64,6 +64,10 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                    break;
+                    
+                case "player":
+                    state.player = new Player(objectX, objectY);
                     break;
             }
         }
