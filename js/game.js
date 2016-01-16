@@ -16,12 +16,23 @@ function preload() {
 
     this.load.tilemap("map", "assets/maps/map.json", null, Phaser.Tilemap.TILED_JSON);
 
-    this.load.spritesheet('kello', 'assets/img/kello.png', 21, 32);
+    this.load.spritesheet('player', 'assets/img/sankari.png', 23, 31);
+    this.load.spritesheet('amme', 'assets/img/amme.png', 42, 20);
     this.load.spritesheet('burana', 'assets/img/burana.png', 31, 9);
     this.load.spritesheet('dynamiitti', 'assets/img/dynamiitti.png', 12, 5);
     this.load.spritesheet('hella', 'assets/img/hella.png', 18, 24);
-    
-    this.load.spritesheet('player', 'assets/img/sankari.png', 23, 31);
+    this.load.spritesheet('keittiokaappi', 'assets/img/keittiokaappi.png', 64, 44);
+    this.load.spritesheet('kello', 'assets/img/kello.png', 21, 32);
+    this.load.spritesheet('kirjahylly', 'assets/img/kirjahylly.png', 30, 45);
+    this.load.spritesheet('laatikko', 'assets/img/kello.png', 16, 21);
+    this.load.spritesheet('minigun', 'assets/img/minigun.png', 30, 17);
+    this.load.spritesheet('kello', 'assets/img/kello.png', 21, 32);
+    this.load.spritesheet('nuke', 'assets/img/nuke.png', 24, 22);
+    this.load.spritesheet('pesukone', 'assets/img/pesukone.png', 18, 19);
+    this.load.spritesheet('poyta', 'assets/img/kello.png', 32, 23);
+    this.load.spritesheet('sanky', 'assets/img/sanky.png', 40, 15);
+    this.load.spritesheet('shotgun', 'assets/img/shotgun.png', 20, 7);
+    this.load.spritesheet('takka', 'assets/img/takka.png', 32, 32);
 }
 
 function create() {
@@ -63,10 +74,10 @@ KillMuumi.GameState.prototype = {
 
         this.obstacle.body.allowGravity = false;
         this.obstacle.body.immovable = true;
-        
+
         this.backgroundLayer = null;
         this.mapLayer = null;
-        
+
         this.levelObstacles = this.add.physicsGroup();
 
         this.mapLoader = new MapLoader();
@@ -75,10 +86,10 @@ KillMuumi.GameState.prototype = {
         this.moomins = this.add.physicsGroup();
 
         this.enemyBullets = this.add.physicsGroup();
-        
-        for (var i=0; i < 10; i++) {
+
+        for (var i = 0; i < 10; i++) {
             var moomin = new Moomin(Math.random() * 800,
-                                    Math.random() * 1000);
+                    Math.random() * 1000);
             this.moomins.add(moomin);
         }
 
@@ -90,42 +101,38 @@ KillMuumi.GameState.prototype = {
         this.moominGibs.gravity = 800;
         this.moominGibs.angularDrag = 30;
         this.moominGibs.bounce.setTo(0.7, 0.7);
-        
+
         this.playerGibs = this.add.emitter(0, 0, "player_gibs", 50);
-        this.playerGibs.makeParticles("player_gibs", [0,1,2,3], 50, true, true);
-        
+        this.playerGibs.makeParticles("player_gibs", [0, 1, 2, 3], 50, true, true);
+
         this.playerGibs.minParticleSpeed.setTo(-300, -50);
         this.playerGibs.maxParticleSpeed.setTo(300, -700);
         this.playerGibs.gravity = 800;
         this.playerGibs.angularDrag = 30;
         this.playerGibs.bounce.setTo(0.7, 0.7);
-        
-        this.playerHeadGibs = this.add.emitter(0,0, "player_head", 1);
-        this.playerHeadGibs.makeParticles("player_gibs", [0,1,2,3], 50, true, true);
-        
+
+        this.playerHeadGibs = this.add.emitter(0, 0, "player_head", 1);
+        this.playerHeadGibs.makeParticles("player_gibs", [0, 1, 2, 3], 50, true, true);
+
         this.playerHeadGibs.minParticleSpeed.setTo(-300, -50);
         this.playerGibs.maxParticleSpeed.setTo(300, -700);
         this.playerGibs.gravity = 800;
         this.playerGibs.angularDrag = 30;
         this.playerGibs.bounce.setTo(0.7, 0.7);
-        
-        
+
+
         this.moominSpawn = 0;
     },
-    
     bulletHitMoomin: function (bullet, moomin) {
         moomin.damage(25);
         bullet.kill();
     },
-    
     killBullets: function (bullet, somethingElse) {
         bullet.kill();
     },
-
-    moominTouchPlayer: function(player, moomin) {
+    moominTouchPlayer: function (player, moomin) {
         moomin.die();
     },
-
     /*
      * Peliä päivitetään n. 60 kertaa sekunnissa tässä
      */
@@ -138,12 +145,12 @@ KillMuumi.GameState.prototype = {
 
         game.physics.arcade.collide(this.moominGibs, this.mapLayer);
         game.physics.arcade.collide(this.moominGibs, this.levelObstacles);
-        
+
         game.physics.arcade.collide(this.playerGibs, this.mapLayer);
         game.physics.arcade.collide(this.playerGibs, this.levelObstacles);
 
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
-        
+
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
 
@@ -157,7 +164,7 @@ KillMuumi.GameState.prototype = {
         }
 
         this.moomins.update();
-        
+
         this.enemyBullets.update();
         this.moominGibs.update();
 

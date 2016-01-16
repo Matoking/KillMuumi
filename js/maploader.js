@@ -61,7 +61,7 @@ MapLoader.prototype = {
                     takka.body.immovable = true;
 
                     takka.body.checkCollision = {
-                        up: true,
+                        up: false,
                         left: false,
                         right: false,
                         down: false
