@@ -8,10 +8,13 @@ MapLoader.prototype = {
         state.map = game.add.tilemap(mapName);
         state.map.addTilesetImage("tiles");
 
-        state.map.setCollision([0, 1, 2, 3, 4, 8, 11, 13, 14, 16, 17, 18]);
+        state.backgroundLayer = state.map.createLayer("Background Layer");
 
-        state.mapLayer = state.map.createLayer("Tile Layer 1");
+        state.mapLayer = state.map.createLayer("Main Layer");
         state.mapLayer.resizeWorld();
+
+        state.map.setCollision([0,1,2,3,4,8,11,13,14,16,17,18], true, "Main Layer");
+
 
         // Load objects
         console.log(state.map.objects);
@@ -66,7 +69,7 @@ MapLoader.prototype = {
 
 
                 case "hella":
-                    var hella = game.make.sprite(objectX, objectY, "hella");
+                    var hella = game.make.sprite(objectX, objectY + 8, "hella");
 
                     state.levelObstacles.add(hella);
 

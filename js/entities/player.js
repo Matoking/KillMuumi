@@ -21,6 +21,17 @@ function Player(x, y) {
 }
 
 Player.prototype = {
+    die: function() {
+        var state = game.state.getCurrentState();
+        
+        state.playerGibs.x = this.sprite.x + 16;
+        state.playerGibs.y = this.sprite.y + 16;
+        
+        state.playerGibs.start(true, 9000, 0, 20);
+        
+        this.sprite.kill();
+    },
+    
     shootLaser: function() {
         var laser = game.make.sprite(this.sprite.x, this.sprite.y, "laser");
         this.lasers.add(laser);
@@ -45,6 +56,10 @@ Player.prototype = {
         
         game.physics.arcade.collide(this.lasers, state.mapLayer, this.laserMapOverlap, null, this);
         game.physics.arcade.overlap(this.lasers, state.moomins, this.laserMoominOverlap, null, this);
+        
+        if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
+            this.die();
+        }
         
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
@@ -75,11 +90,9 @@ Player.prototype = {
         // Handle the stairs here somehow
         if (this.sprite.body.deltaY() >= 0) {
             var mapData = state.mapLayer.getTiles(this.sprite.x - (this.sprite.x % 32),
-                                                  this.sprite.y - (this.sprite.y % 32) - 8,
+                                                  this.sprite.y - (this.sprite.y % 32) + 8,
                                                   32, 32,
                                                   false, false);
-                                   
-            console.log(mapData.length);
             
             for (var i=0; i < mapData.length; i++) {
                 var t = mapData[i];
