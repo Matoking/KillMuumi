@@ -29,7 +29,7 @@ MapLoader.prototype = {
             
             switch(gameObject.type) {
                 case "kello":
-                    var clock = game.make.sprite(objectX, objectY, "clock");
+                    var clock = game.make.sprite(objectX, objectY, "kello");
                     
                     clock.animations.add("idle", [0,1,2,3,4,5], 8, true);
                     clock.animations.play("idle");

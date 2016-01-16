@@ -97,8 +97,8 @@ KillMuumi.GameState.prototype = {
         bullet.kill();
     },
     
-    moominTouchPlayer: function(moomin, player) {
-        console.log(moomin);
+    moominTouchPlayer: function(player, moomin) {
+        console.log(player);
         moomin.die();
     },
 
@@ -120,10 +120,6 @@ KillMuumi.GameState.prototype = {
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
         this.moomins.update();
-        
-        if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
-            this.moomin.die();
-        }
         
         this.enemyBullets.update();
         this.moominGibs.update();
