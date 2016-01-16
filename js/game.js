@@ -17,7 +17,9 @@ function preload () {
 
     this.load.tilemap("map", "assets/maps/map.json", null, Phaser.Tilemap.TILED_JSON);
 
-    this.load.spritesheet('clock', 'assets/img/kelloanimoitu.png', 32, 32);
+    this.load.spritesheet('kello', 'assets/img/kello.png', 21, 32);
+    this.load.spritesheet('burana', 'assets/img/burana.png', 31, 9);    
+    this.load.spritesheet('dynamiitti', 'assets/img/dynamiitti.png', 12, 5);
 }
 
 function create() {
