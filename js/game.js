@@ -10,6 +10,7 @@ function preload() {
     this.load.spritesheet('tiles', 'assets/img/tilet.png', 32, 32);
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
     this.load.spritesheet('moomin_gibs', 'assets/img/muuminpalaset.png', 8, 8);
+    this.load.spritesheet('player_gibs', 'assets/img/muuminpalaset.png', 8, 8);
 
     this.load.spritesheet('bullets', 'assets/img/bullets.png', 8, 4);
 
@@ -62,8 +63,14 @@ KillMuumi.GameState.prototype = {
 
         this.obstacle.body.allowGravity = false;
         this.obstacle.body.immovable = true;
-
+        
+        this.backgroundLayer = null;
+        this.mapLayer = null;
+        
         this.levelObstacles = this.add.physicsGroup();
+
+        this.mapLoader = new MapLoader();
+        this.mapLoader.loadMap("map");
 
         this.moomins = this.add.physicsGroup();
 
@@ -75,9 +82,6 @@ KillMuumi.GameState.prototype = {
             this.moomins.add(moomin);
         }
 
-        this.mapLoader = new MapLoader();
-        this.mapLoader.loadMap("map");
-
         this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 150);
         this.moominGibs.makeParticles("moomin_gibs", [0, 1, 2, 3], 50, true, true);
 
@@ -86,6 +90,25 @@ KillMuumi.GameState.prototype = {
         this.moominGibs.gravity = 800;
         this.moominGibs.angularDrag = 30;
         this.moominGibs.bounce.setTo(0.7, 0.7);
+        
+        this.playerGibs = this.add.emitter(0, 0, "player_gibs", 50);
+        this.playerGibs.makeParticles("player_gibs", [0,1,2,3], 50, true, true);
+        
+        this.playerGibs.minParticleSpeed.setTo(-300, -50);
+        this.playerGibs.maxParticleSpeed.setTo(300, -700);
+        this.playerGibs.gravity = 800;
+        this.playerGibs.angularDrag = 30;
+        this.playerGibs.bounce.setTo(0.7, 0.7);
+        
+        this.playerHeadGibs = this.add.emitter(0,0, "player_head", 1);
+        this.playerHeadGibs.makeParticles("player_gibs", [0,1,2,3], 50, true, true);
+        
+        this.playerHeadGibs.minParticleSpeed.setTo(-300, -50);
+        this.playerGibs.maxParticleSpeed.setTo(300, -700);
+        this.playerGibs.gravity = 800;
+        this.playerGibs.angularDrag = 30;
+        this.playerGibs.bounce.setTo(0.7, 0.7);
+        
         
         this.moominSpawn = 0;
     },
@@ -115,6 +138,9 @@ KillMuumi.GameState.prototype = {
 
         game.physics.arcade.collide(this.moominGibs, this.mapLayer);
         game.physics.arcade.collide(this.moominGibs, this.levelObstacles);
+        
+        game.physics.arcade.collide(this.playerGibs, this.mapLayer);
+        game.physics.arcade.collide(this.playerGibs, this.levelObstacles);
 
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
         
