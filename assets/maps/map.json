@@ -40,8 +40,22 @@
                  "type":"kello",
                  "visible":true,
                  "width":0,
-                 "x":430,
-                 "y":656
+                 "x":431,
+                 "y":654
+                }, 
+                {
+                 "ellipse":true,
+                 "height":0,
+                 "name":"kello",
+                 "properties":
+                    {
+
+                    },
+                 "type":"kello",
+                 "visible":true,
+                 "width":0,
+                 "x":432,
+                 "y":623
                 }],
          "opacity":1,
          "type":"objectgroup",
