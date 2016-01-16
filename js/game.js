@@ -33,6 +33,8 @@ function preload() {
     this.load.spritesheet('sanky', 'assets/img/sanky.png', 40, 15);
     this.load.spritesheet('shotgun', 'assets/img/shotgun.png', 20, 7);
     this.load.spritesheet('takka', 'assets/img/takka.png', 32, 32);
+    this.load.spritesheet('taululaiva', 'assets/img/tauluaiva.png', 21, 16);
+    this.load.spritesheet('taulumetsa', 'assets/img/taulumetsa.png', 21, 17);
 }
 
 function create() {
