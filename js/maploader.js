@@ -13,7 +13,7 @@ MapLoader.prototype = {
         state.mapLayer = state.map.createLayer("Main Layer");
         state.mapLayer.resizeWorld();
 
-        state.map.setCollision([0,1,2,3,4,8,11,13,14,16,17,18], true, "Main Layer");
+        state.map.setCollision([0, 1, 2, 3, 4, 8, 11, 13, 14, 16, 17, 18], true, "Main Layer");
 
 
         // Load objects
@@ -66,7 +66,23 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+                case "teevee":
+                    var teevee = game.make.sprite(objectX, objectY, "teevee");
 
+                    teevee.animations.add("idle", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
+                    teevee.animations.play("idle");
+
+                    state.levelObstacles.add(teevee);
+
+                    teevee.body.allowGravity = false;
+                    teevee.body.immovable = true;
+
+                    teevee.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
 
                 case "hella":
                     var hella = game.make.sprite(objectX, objectY + 8, "hella");
