@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="32" height="64" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="39" height="64" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
-  <image source="../img/tilet.png" width="256" height="192"/>
+  <image source="../img/tilet.png" width="256" height="96"/>
  </tileset>
- <layer name="Background Layer" width="32" height="64">
+ <layer name="Background Layer" width="39" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt0zEKgDAQBMDYWFnl/4+1sUhxmqCYU5iBrXc5uFIAAAAAAHhqaQLEapNsGRtqkOz+mRvO+mdtuOqfsaHX/4W/GJW5OfNOuv/RvQZ5q7vXtR0Z+f87iexcxwVE
+   eJzt0MEKgCAQRVGTCIL+/3tz2UJMCh2oc+Gt5zApSZKurdGARkc0oBHbs9j62gePjY2NjY2NjS3C9ra//o2NjY2NjY2NjY2NjY2NjY2Nje2rtq1js2y1u3flsmXwcuXuCRTjKfo=
   </data>
  </layer>
- <layer name="Main Layer" width="32" height="64">
+ <layer name="Main Layer" width="39" height="64">
   <data encoding="base64" compression="zlib">
-   eJztmNEKwjAMRaebrz7s/z9WHyyUkmRtc3M7IYGAONg5rknauW3/G8c3XwvZJdgOh/Ady0FisxwsdrRDDzvKYYSNdphhoxw8bK8Dgj3rgGSPOuwB7BLP5Cc/+bfmR0by78d/CHn+ksFvY6/4aIcZPtJhlo9y8PARDkj+qXyO5Fu5mq851NfZ+0/rx+RLz4fF19aHwbfqY6T+rHv28pi/v6cHR/nWPa155Imr/cc7g3r4K0PjR5xHND5y/m7VdemsJfFHoped8z/nfzQfNf+t/hjhefa/umdRMfv8UQ6e9Uc4eOvP64Cof48Dqv/KO3oUH7n/1b3M3n/atWLypTph8bUaZfCt/oj+/ws5q1nst5DSORGREusDFwgPkA==
+   eJztmNEKwyAMRbuuexsU9v8fuwkbk6Ci5qiB5sJ9KYSctrFXu23X0vHxYzVEQoHr+bUlvpjLEl+KywJfiWslXw3XCr4Wrtl8rVwz+A4l2yi+33vUstF88XwRbBSfnHuKTcuXWo8km4bv3lk3o4ezza2b0SPUvSDHiq/vCjZaktMKm+QKssCW4grqZeutk8pxaXrsW908a0w9t9L994p8pzQfPW8jnl+rSve0mk+uhRG5EHwTrmWjJTl7v6E0W2oOLLDl5nM1W2ndUHsk2Y8wtbcc8d0g9700H70nJ/lGnBcoPsvnBUvnLCoXZpwXLLDRuUCxeS7w8lxge2jqPBfKbLQ8F9rkufDv57lQX+e5oKvzXCiz0bpCLpCic4FSay6cFSb/qea8J/q+AWdoGuk=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="32" height="64">
-  <object name="player" type="player" x="255" y="1982">
+ <objectgroup name="Object Layer 1" width="39" height="64">
+  <object name="player" type="player" x="400" y="1966">
    <ellipse/>
   </object>
-  <object name="powerup_spawn" type="powerup_spawn" x="209" y="1550"/>
-  <object name="powerup_spawn" type="powerup_spawn" x="336" y="1296"/>
-  <object name="powerup_spawn" type="powerup_spawn" x="337" y="1135"/>
-  <object name="powerup_spawn" type="powerup_spawn" x="941" y="1326"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="463" y="1614"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="649" y="659"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="658" y="973"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="1043" y="1165"/>
   <object name="powerup_spawn" type="powerup_spawn" x="816" y="1775"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="526" y="1230"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="976" y="433"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="47" y="400"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="108" y="397"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="910" y="432"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="111" y="817"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="50" y="816"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="880" y="14"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="495" y="11"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="15" y="10"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="45" y="7"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="1223" y="13"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="9" y="1994"/>
  </objectgroup>
 </map>
