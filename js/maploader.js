@@ -34,12 +34,6 @@ MapLoader.prototype = {
                     kello.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
                     kello.animations.play("idle");
 
-                    var clock = game.make.sprite(objectX, objectY, "kello");
-
-                    clock.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
-                    clock.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
-                    clock.animations.play("idle");
-
                     state.levelObstacles.add(kello);
 
                     kello.body.allowGravity = false;
@@ -52,9 +46,24 @@ MapLoader.prototype = {
                         down: false
                     };
 
+                case "takka":
+                    var takka = game.make.sprite(objectX, objectY, "takka");
 
-                    console.log("Clock created at " + objectX + "x" + objectY);
-                    break;
+                    takka.animations.add("idle", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
+                    takka.animations.play("idle");
+
+                    state.levelObstacles.add(takka);
+
+                    takka.body.allowGravity = false;
+                    takka.body.immovable = true;
+
+                    takka.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+
 
                 case "hella":
                     var hella = game.make.sprite(objectX, objectY, "hella");
