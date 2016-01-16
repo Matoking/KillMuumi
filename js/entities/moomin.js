@@ -13,6 +13,7 @@ function Moomin(x, y, type) {
     state.moomins.add(this.sprite);
     
     this.gunTimer = 0;
+    this.followTimer = 0;
 }
 
 Moomin.prototype = {
@@ -27,9 +28,33 @@ Moomin.prototype = {
             this.sprite.scale.x = -1;
         }
         
-        var xDistance = Math.abs(state.player.sprite.y - this.sprite.y);
+        // Following
+        var yDistance = Math.abs(state.player.sprite.y - this.sprite.y);
+        var xDistance = Math.abs(state.player.sprite.x - this.sprite.x);
         
-        if (game.time.now > this.gunTimer + 200 && xDistance < 80) {
+        if (xDistance < 400 && yDistance < 150) {
+            this.followTimer = game.time.now;
+            
+            if (this.direction === "left") {
+                this.sprite.body.velocity.x = -250;
+            } else {
+                this.sprite.body.velocity.x = 250;
+            }
+            
+            if (((this.sprite.body.blocked.left && this.direction === "left") ||
+                 (this.sprite.body.blocked.right && this.direction === "right")) &&
+                 this.sprite.body.blocked.down) {
+                this.sprite.body.velocity.y = -280;
+            }
+        } else {
+            // Keep moving for a while even if the player is lost
+            if (this.followTimer > game.time.now - 800) {
+                this.sprite.body.velocity.x = 0;
+            }
+        }
+        
+        // Shooting
+        if (game.time.now > this.gunTimer + 200 && yDistance < 80) {
             var bullet = game.make.sprite(this.sprite.x, this.sprite.y, "bullets", 0);
             
             state.enemyBullets.add(bullet);
@@ -41,8 +66,6 @@ Moomin.prototype = {
             } else {
                 bullet.body.velocity.x = -800;
             }
-            
-            console.log(bullet.body.velocity);
             
             this.gunTimer = game.time.now;
         }

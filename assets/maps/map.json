@@ -14,7 +14,35 @@
         {
          "height":32,
          "name":"Object Layer 1",
-         "objects":[],
+         "objects":[
+                {
+                 "ellipse":true,
+                 "height":0,
+                 "name":"kello",
+                 "properties":
+                    {
+
+                    },
+                 "type":"kello",
+                 "visible":true,
+                 "width":0,
+                 "x":270,
+                 "y":655
+                }, 
+                {
+                 "ellipse":true,
+                 "height":0,
+                 "name":"kello",
+                 "properties":
+                    {
+
+                    },
+                 "type":"kello",
+                 "visible":true,
+                 "width":0,
+                 "x":430,
+                 "y":656
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,

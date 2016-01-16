@@ -8,5 +8,12 @@
    eJztlkEOwCAIBEH7/zd7kYuxGq2WNe4kex5IgKAiojmhkt2o4Pg9QPJ71IDUP/30008//ff4rQaCSfmfeM/KTmr/79//cAuUOlbzfAg5G5vnOJhVO1retd7+v93D2duYAEMPAPo=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="32" height="32"/>
+ <objectgroup name="Object Layer 1" width="32" height="32">
+  <object name="kello" type="kello" x="270" y="655">
+   <ellipse/>
+  </object>
+  <object name="kello" type="kello" x="430" y="656">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

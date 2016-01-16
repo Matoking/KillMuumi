@@ -12,5 +12,42 @@ MapLoader.prototype = {
         
         state.mapLayer = state.map.createLayer("Tile Layer 1");
         state.mapLayer.resizeWorld();
+        
+        // Load objects
+        console.log(state.map.objects);
+        
+        var objectLayer = state.map.objects["Object Layer 1"];
+        
+        console.log(objectLayer);
+        
+        for (var i=0; i < objectLayer.length; i++) {
+            var gameObject = objectLayer[i];
+            console.log(gameObject);
+            
+            var objectX = gameObject.x - (gameObject.x % 32);
+            var objectY = gameObject.y - (gameObject.y % 32);
+            
+            switch(gameObject.type) {
+                case "kello":
+                    var clock = game.make.sprite(objectX, objectY, "clock");
+                    
+                    clock.animations.add("idle", [0,1,2,3,4,5], 8, true);
+                    clock.animations.play("idle");
+                    
+                    state.levelObstacles.add(clock);
+                    
+                    clock.body.allowGravity = false;
+                    clock.body.immovable = true;
+                    
+                    clock.body.checkCollision = {
+                        up: true,
+                        left: false,
+                        right: false,
+                        down: false
+                    };
+                    
+                    console.log("Clock created at " + objectX + "x" + objectY);
+            }
+        }
     }
 };

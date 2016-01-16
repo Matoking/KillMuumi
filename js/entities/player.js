@@ -33,7 +33,7 @@ Player.prototype = {
     update: function() {
         var state = game.state.getCurrentState();
         
-        //game.physics.arcade.overlap(this.lasers, state.mapLayer, this.laserMapOverlap, null, this);
+        game.physics.arcade.collide(this.lasers, state.mapLayer, this.laserMapOverlap, null, this);
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
             this.sprite.body.velocity.x = -400;
