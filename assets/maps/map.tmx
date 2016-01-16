@@ -12,7 +12,10 @@
   <object name="kello" type="kello" x="270" y="655">
    <ellipse/>
   </object>
-  <object name="kello" type="kello" x="430" y="656">
+  <object name="kello" type="kello" x="431" y="654">
+   <ellipse/>
+  </object>
+  <object name="kello" type="kello" x="432" y="623">
    <ellipse/>
   </object>
  </objectgroup>

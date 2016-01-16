@@ -64,8 +64,12 @@ KillMuumi.GameState.prototype = {
         this.moomins = this.add.physicsGroup();
         
         this.enemyBullets = this.add.physicsGroup();
-
-        this.moomin = new Moomin(500, 500);
+        
+        for (var i=0; i < 10; i++) {
+            var moomin = new Moomin(Math.random() * 800,
+                                    Math.random() * 1000);
+            this.moomins.add(moomin);
+        }
 
         this.mapLoader = new MapLoader();
         this.mapLoader.loadMap("map");
@@ -78,6 +82,8 @@ KillMuumi.GameState.prototype = {
         this.moominGibs.gravity = 800;
         this.moominGibs.angularDrag = 30;
         this.moominGibs.bounce.setTo(0.7, 0.7);
+        
+        this.moominSpawn = 0;
     },
     
     bulletHitMoomin: function(bullet, moomin) {
@@ -87,6 +93,11 @@ KillMuumi.GameState.prototype = {
     
     killBullets: function(bullet, somethingElse) {
         bullet.kill();
+    },
+    
+    moominTouchPlayer: function(moomin, player) {
+        console.log(moomin);
+        moomin.die();
     },
 
     /*
@@ -103,8 +114,10 @@ KillMuumi.GameState.prototype = {
         game.physics.arcade.collide(this.moominGibs, this.levelObstacles);
         
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
+        
+        game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
-        this.moomin.update();
+        this.moomins.update();
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.C)) {
             this.moomin.die();
