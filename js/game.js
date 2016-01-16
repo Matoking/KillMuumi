@@ -16,6 +16,7 @@ function preload() {
     this.load.spritesheet('moomins', 'assets/img/tyypit.png', 32, 32);
     this.load.spritesheet('moomin_gibs', 'assets/img/muuminpalaset.png', 8, 8);
     this.load.spritesheet('player_gibs', 'assets/img/pelaajanpalaset.png', 8, 8);
+    this.load.spritesheet('explosion_gibs', 'assets/img/tuhka.png', 1, 1);
 
     this.load.spritesheet('bullets', 'assets/img/bullets.png', 8, 4);
 
@@ -42,14 +43,25 @@ function preload() {
     this.load.spritesheet('taulumetsa', 'assets/img/taulumetsa.png', 21, 17);
     this.load.spritesheet('teevee', 'assets/img/teevee.png', 30, 33);
     
+    this.load.spritesheet('explosion', 'assets/img/explo.png', 32, 32);
+    
     this.load.audio("taustamusa", ['assets/audio/taustamusa.mp3'])
     this.load.audio("s_powerup", ['assets/audio/powerup.mp3']);
     this.load.audio("s_burana", ['assets/audio/burana.mp3']);
     this.load.audio("s_hit", ['assets/audio/isku.mp3']);
+    this.load.audio("s_kop", ['assets/audio/kop.mp3']);
     this.load.audio("s_rajahdys", ['assets/audio/rajahdys.wav']);
     this.load.audio("s_shotgun", ['assets/audio/shotgun.mp3']);
     this.load.audio("s_minigun", ['assets/audio/minigun-cut.mp3']);
     this.load.audio("s_minigun_pause", ['assets/audio/minigun-pause.mp3']);
+    this.load.audio("s_rajahdys2", ['assets/audio/explosion.mp3']);
+    this.load.audio("s_laser", ['assets/audio/laser.wav']);
+    
+    this.load.audio("s_gameover", ['assets/audio/sepä oli hauskaa.mp3']);
+    
+    this.load.audio("s_dialog_1", ['assets/audio/muumipappa - voi ei.mp3']);
+    this.load.audio("s_dialog_2", ['assets/audio/niiskuneiti - onko kaikki hyvin.mp3']);
+    this.load.audio("s_dialog_3", ['assets/audio/muumipeikko - täältä tullaan.mp3']);
 }
 
 function create() {
@@ -79,8 +91,6 @@ KillMuumi.GameState.prototype = {
 
         this.stage.backgroundColor = "#00BFFF";
 
-        //this.player = new Player(320, 400);
-
         this.physics.arcade.gravity.y = 800;
 
         this.backgroundLayer = null;
@@ -94,6 +104,8 @@ KillMuumi.GameState.prototype = {
         this.mapLoader.loadMap("map");
         
         this.moomins = this.add.physicsGroup();
+        
+        this.doors = this.add.physicsGroup();
 
         this.enemyBullets = this.add.physicsGroup();
         
@@ -133,14 +145,30 @@ KillMuumi.GameState.prototype = {
         this.playerHeadGibs.particleDrag = 90;
         this.playerHeadGibs.bounce.setTo(0.8, 0.8);
         
+        this.explosionGibs = this.add.emitter(0, 0, "explosion_gibs", 500);
+        this.explosionGibs.makeParticles("explosion_gibs", [0,1,2,3], 500, true, true);
+        
+        this.explosionGibs.minParticleSpeed.setTo(-400, -100);
+        this.explosionGibs.maxParticleSpeed.setTo(400, -400);
+        this.explosionGibs.gravity = 600;
+        this.explosionGibs.angularDrag = 90;
+        this.explosionGibs.particleDrag = 90;
+        this.explosionGibs.bounce.setTo(0.3, 0.3);
+        
         this.lifeBarFill = game.add.sprite(29, 25, "elamapalkki_tayte");
         this.lifeBarFill.fixedToCamera = true;
         
         this.lifeBar = game.add.sprite(25, 25, "elamapalkki");
         this.lifeBar.fixedToCamera = true;
         
-        var burana = new Burana(0,900);
-        this.powerups.add(burana);
+        this.killCountText = game.add.text(245,20,
+                                           "Muumeja tapettu: 0",
+                                           {
+                                               font: "20px monospace",
+                                               align: "left",
+                                               fill: "black"
+                                           });
+        this.killCountText.fixedToCamera = true;
 
         this.playerGibs = this.add.emitter(0, 0, "player_head", 1);
         this.playerGibs.makeParticles("player_gibs", [0, 1, 2, 3], 50, true, true);
@@ -185,16 +213,35 @@ KillMuumi.GameState.prototype = {
         this.bgMusic = this.add.audio("taustamusa");
         this.buranaSound = this.add.audio("s_burana");
         this.hitSound = this.add.audio("s_hit");
+        this.kopSound = this.add.audio("s_kop");
         this.powerupSound = this.add.audio("s_powerup");
+        
         this.explosionSound = this.add.audio("s_rajahdys");
+        this.explosionTwoSound = this.add.audio("s_rajahdys2");
+        
         this.shotgunSound = this.add.audio("s_shotgun");
         this.minigunSound = this.add.audio("s_minigun");
         this.minigunPauseSound = this.add.audio("s_minigun_pause");
+        this.laserSound = this.add.audio("s_laser");
         
-        this.bgMusic.play('', 0, 1, true);
+        this.gameOverSound = this.add.audio("s_gameover");
+        
+        this.voiceClips = [
+            this.add.audio("s_dialog_1"),
+            this.add.audio("s_dialog_2"),
+            this.add.audio("s_dialog_3")
+        ];
+        
+        this.moominsKilled = 0;
+        
+        this.bgMusic.play('', 0, 0.5, true);
     },
             
     bulletHitMoomin: function (bullet, moomin) {
+        if (!bullet.alive) {
+            return;
+        }
+        
         moomin.damage(bullet.health);
         bullet.kill();
     },
@@ -209,10 +256,16 @@ KillMuumi.GameState.prototype = {
     },
             
     moominTouchPlayer: function (player, moomin) {
-        this.hitSound.play();
+        this.explosionTwoSound.play();
         
-        moomin.die();
+        moomin.die(true);
         this.player.health -= 250;
+    },
+    
+    playVoiceClip: function() {
+        var sound = Phaser.ArrayUtils.getRandomItem(this.voiceClips);
+        
+        sound.play();
     },
     
     playerTouchPowerup: function(player, powerup) {
@@ -269,6 +322,12 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.collide(this.playerHeadGibs, this.mapLayer);
         game.physics.arcade.collide(this.playerHeadGibs, this.levelObstacles);
+        
+        game.physics.arcade.collide(this.explosionGibs, this.mapLayer);
+        game.physics.arcade.collide(this.explosionGibs, this.levelObstacles);
+        
+        game.physics.arcade.collide(this.player.sprite, this.doors);
+        game.physics.arcade.collide(this.moomins, this.doors);
 
         game.physics.arcade.collide(this.powerups, this.mapLayer);
 

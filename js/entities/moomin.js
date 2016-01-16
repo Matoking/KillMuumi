@@ -3,6 +3,7 @@ MUUMIPAPPA = 2;
 MUUMIMAMMA = 6;
 NIISKUNEITI = 8;
 EN_MUISTA_TAMAN_TYYPIN_NIMEA = 10;
+MUUMIPAPPA_ASE = 14;
 
 function Moomin(x, y, type) {
     var randomNumber = Math.ceil(Math.random() * 30);
@@ -29,6 +30,9 @@ function Moomin(x, y, type) {
     this.animations.add("idle", [this.enemyType]);
     this.animations.add("walk", [this.enemyType, this.enemyType+1], 4, true);
     
+    this.animations.add("gun_idle", [MUUMIPAPPA_ASE]);
+    this.animations.add("gun_walk", [MUUMIPAPPA_ASE, MUUMIPAPPA_ASE+1], 4, true);
+    
     this.animations.play("idle");
     
     game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -45,11 +49,32 @@ function Moomin(x, y, type) {
 Moomin.prototype = Object.create(Phaser.Sprite.prototype);
 Moomin.prototype.constructor = Moomin;
 
-Moomin.prototype.die = function() {
+Moomin.prototype.die = function(suicide) {
+    suicide = typeof suicide !== 'undefined' ? suicide : false;
+    
     var state = game.state.getCurrentState();
 
     state.moominGibs.x = this.x + 16;
     state.moominGibs.y = this.y + 16;
+    
+    state.explosionGibs.x = this.x + 16;
+    state.explosionGibs.y = this.y + 16;
+
+    if (!suicide) {
+        state.moominsKilled += 1;
+        state.killCountText.setText("Muumeja tapettu: " + state.moominsKilled);
+        
+        if (state.moominsKilled % 8 === 0) {
+            state.playVoiceClip();
+        }
+    } else {
+        console.log("ka blew");
+        state.explosionGibs.start(true, 1500, 0, 50);
+        
+        var explosion = game.add.sprite(this.x, this.y, "explosion");
+        explosion.animations.add("blow_up", [0,1,2,3], 12, false);
+        explosion.animations.play("blow_up", 12, false, true);
+    }
 
     state.moominGibs.start(true, 4500, 0, 10);
 
@@ -100,6 +125,11 @@ Moomin.prototype.update = function() {
         } else {
             this.body.velocity.x = 80;
         }
+        
+        // Jump randomly while chasing
+        if (this.body.blocked.down && Math.random() * 60  > 58.53) {
+            this.body.velocity.y = -280;
+        }
 
         if (((this.body.blocked.left && this.direction === "left") ||
              (this.body.blocked.right && this.direction === "right")) &&
@@ -139,15 +169,24 @@ Moomin.prototype.update = function() {
         if (((this.body.blocked.left && this.direction === "left") ||
              (this.body.blocked.right && this.direction === "right")) &&
              this.body.blocked.down) {
-            this.body.velocity.y = -280;
+            this.wanderTimer = game.time.now;
+            this.body.velocity.y = -380;
             
             this.body.velocity.x = this.direction === "right" ? 50 : -50;
         }
     }
+    
+    if (((this.body.blocked.left && this.direction === "left") ||
+        (this.body.blocked.right && this.direction === "right")) &&
+        this.body.blocked.down && this.body.deltaY() !== 0) {
+       this.body.velocity.x = this.direction === "right" ? 450 : -450;
+   }
 
     // Shooting
     if (!state.player.dead && this.enemyType === MUUMIPAPPA && game.time.now > this.gunTimer + 200 && yDistance < 80) {
         var bullet = game.make.sprite(this.x, this.y, "bullets", 0);
+        
+        this.animations.play("gun_walk");
 
         state.enemyBullets.add(bullet);
 

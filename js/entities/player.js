@@ -27,6 +27,8 @@ function Player(x, y) {
     this.minigunTimer = 0;
     
     this.minigunHold = 0;
+    
+    this.onGround = false;
 }
 
 Player.prototype = {
@@ -39,14 +41,18 @@ Player.prototype = {
         state.playerHeadGibs.x = this.sprite.x + 16;
         state.playerHeadGibs.y = this.sprite.y + 16;
         
-        state.playerGibs.start(true, 9000, 0, 20);
-        state.playerHeadGibs.start(true, 900000, 0, 20);
+        state.playerGibs.start(true, 6000, 0, 20);
+        state.playerHeadGibs.start(true, 10000, 0, 20);
         
         this.sprite.kill();
+        
+        state.minigunSound.stop();
         
         this.dead = true;
         
         game.camera.follow(state.playerHeadGibs);
+        
+        state.gameOverSound.play();
     },
     
     shootLaser: function() {
@@ -143,15 +149,25 @@ Player.prototype = {
             return;
         }
         
+        if ((this.sprite.body.touching.down || this.sprite.body.onFloor()) &&
+            this.sprite.body.deltaY() === 0 && !this.onGround) {
+            this.onGround = true;
+            state.kopSound.play('', 0, 0.2);
+        }
+        
+        if (this.sprite.body.deltaY() !== 0) {
+            this.onGround = false;
+        }
+        
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
             this.sprite.animations.play("walk");
-            this.sprite.body.velocity.x = -400;
+            this.sprite.body.velocity.x = -270;
             this.sprite.scale.x = -1;
             this.direction = "left";
         } else if (game.input.keyboard.isDown(Phaser.KeyCode.RIGHT)) {
             this.sprite.animations.play("walk");
-            this.sprite.body.velocity.x = 400;
+            this.sprite.body.velocity.x = 270;
             this.sprite.scale.x = 1;
             this.direction = "right";
         } else {
@@ -174,6 +190,8 @@ Player.prototype = {
                     
                     this.shootShotgun();
                 } else {
+                    state.laserSound.play();
+                    
                     this.shootLaser();
                 }
             } else {
@@ -191,8 +209,9 @@ Player.prototype = {
             }
         } else {
             if (this.minigunHold > 0) {
-            state.minigunPauseSound.play('', 0, 1, false, false);
+                state.minigunPauseSound.play('', 0, 1, false, false);
             }
+            
             state.minigunSound.stop();
             this.minigunHold = 0;
         }

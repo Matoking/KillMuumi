@@ -5,9 +5,14 @@ KillMuumi.IntroState.prototype = {
      * Peli luodaan tiedostojen lataamisen jälkeen tässä
      */
     create: function() {
+        viestit = ["Vuosisadan Muumien tapposimulaattori",
+                   "Ei laisinkaan tuotesijoittelua!",
+                   "Ei välttämättä perheystävällinen",
+                   "Varo muumipappaa"];
+               
         this.text = this.add.text(this.world.centerX, 
                                   this.world.centerY, 
-                                  "KillMuumi\nVuosisadan Muumien tapposimulaattori",
+                                  "KillMuumi\n" + Phaser.ArrayUtils.getRandomItem(viestit),
                                 {
                                     font: "24px monospace",
                                     align: "center",
