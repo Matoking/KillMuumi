@@ -65,6 +65,7 @@ Player.prototype = {
         laser.health = 25;
         laser.body.allowGravity = false;
         laser.body.velocity.x = this.direction === "right" ? 700 : -700;
+        laser.body.velocity.y = 0;
         laser.x += this.direction === "right" ? 30 : -20;
         laser.outOfBoundsKill = true;
     },

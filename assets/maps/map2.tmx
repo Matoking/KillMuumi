@@ -5,17 +5,29 @@
  </tileset>
  <layer name="Background Layer" width="32" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt07EKgDAMBNBOTk79/491cXCItghNFN6Dm+8IpDUAAAAAAID1+iXVKjb0INX9mRvu+rM2PPVnbBj1f+EvZlVurryT7n90b0FWdY+69jMz//8mkQM9FwVB
+   eJzt0zEKgDAQBMDYWFnl/4+1sUhxmqCYU5iBrXc5uFIAAAAAAHhqaQLEapNsGRtqkOz+mRvO+mdtuOqfsaHX/4W/GJW5OfNOuv/RvQZ5q7vXtR0Z+f87iexcxwVE
   </data>
  </layer>
  <layer name="Main Layer" width="32" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt1MsKwjAQQNGmxm0X/f+PtS4CRSYxk3mIcAdmU5BzaRO37X+nXvv8od0mu6EKz7IaJDurYWRHN8zYUQ0a27thxfZqsNjWBg97tcHT1jY8Auw2Oz4+Pj4+Pj4+Pj4+Pj4+Pj4+/rXltqM5lTvr33/zrUEzq+/fq8Hy/T0arOfP2uBx/i0NXvfv3XAG+tp71bbX2jb7/+fzW2X60jnJ8ntnNMMf3Y8ZP8qOnlX7ELYErWS9AH8YBCk=
+   eJztmNEKwjAMRaebrz7s/z9WHyyUkmRtc3M7IYGAONg5rknauW3/G8c3XwvZJdgOh/Ady0FisxwsdrRDDzvKYYSNdphhoxw8bK8Dgj3rgGSPOuwB7BLP5Cc/+bfmR0by78d/CHn+ksFvY6/4aIcZPtJhlo9y8PARDkj+qXyO5Fu5mq851NfZ+0/rx+RLz4fF19aHwbfqY6T+rHv28pi/v6cHR/nWPa155Imr/cc7g3r4K0PjR5xHND5y/m7VdemsJfFHoped8z/nfzQfNf+t/hjhefa/umdRMfv8UQ6e9Uc4eOvP64Cof48Dqv/KO3oUH7n/1b3M3n/atWLypTph8bUaZfCt/oj+/ws5q1nst5DSORGREusDFwgPkA==
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="32" height="64">
   <object name="player" type="player" x="255" y="1982">
    <ellipse/>
   </object>
+  <object name="powerup_spawn" type="powerup_spawn" x="209" y="1550"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="336" y="1296"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="337" y="1135"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="941" y="1326"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="816" y="1775"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="526" y="1230"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="976" y="433"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="47" y="400"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="108" y="397"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="910" y="432"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="111" y="817"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="50" y="816"/>
  </objectgroup>
 </map>

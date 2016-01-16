@@ -91,6 +91,12 @@ KillMuumi.GameState.prototype = {
         var nuke = new Nuke(0, 2000);
         this.powerups.add(nuke);
         
+        var minigun = new Minigun(0, 1900);
+        this.powerups.add(minigun);
+        
+        var shotgun = new Shotgun(50, 1950);
+        this.powerups.add(shotgun);
+        
         for (var i = 0; i < 10; i++) {
             var moomin = new Moomin(Math.random() * 800,
                     Math.random() * 1000);
@@ -150,9 +156,21 @@ KillMuumi.GameState.prototype = {
                                               align: "center",
                                               fill: "white"
                                           });
+                                          
         this.gameOverText.fixedToCamera = true;
         this.gameOverText.visible = false;
         
+        this.shotgunIcon = this.add.image(25, 60, "shotgun", 0);
+        this.shotgunIcon.visible = false;
+        this.shotgunIcon.scale.x = 2;
+        this.shotgunIcon.scale.y = 2;
+        this.shotgunIcon.fixedToCamera = true;
+        
+        this.minigunIcon = this.add.image(90, 50, "minigun", 0);
+        this.shotgunIcon.visible = false;
+        this.minigunIcon.scale.x = 2;
+        this.minigunIcon.scale.y = 2;
+        this.minigunIcon.fixedToCamera = true;
         
         this.nukeFlash = this.add.image(0, 0, "valahdys");
         this.nukeFlash.visible = false;
@@ -200,6 +218,10 @@ KillMuumi.GameState.prototype = {
             
             this.nukeFlash.visible = true;
             this.add.tween(this.nukeFlash).to({alpha: 1}, 250, Phaser.Easing.Linear.None, true, 0, 250, true);
+        } else if (powerup.powerupType === "minigun") {
+            this.player.minigunTimer = game.time.now + 30000;
+        } else if (powerup.powerupType === "shotgun") {
+            this.player.shotgunTimer = game.time.now + 30000;
         }
         
         powerup.kill();
@@ -223,6 +245,8 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.collide(this.playerHeadGibs, this.mapLayer);
         game.physics.arcade.collide(this.playerHeadGibs, this.levelObstacles);
+
+        game.physics.arcade.collide(this.powerups, this.mapLayer);
 
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
 
@@ -261,6 +285,18 @@ KillMuumi.GameState.prototype = {
             this.time.slowMotion = 1.0;
             
             this.nukeFlash.visible = false;
+        }
+        
+        if (this.player.minigunTimer > game.time.now) {
+            this.minigunIcon.visible = true;
+        } else {
+            this.minigunIcon.visible = false;
+        }
+        
+        if (this.player.shotgunTimer > game.time.now) {
+            this.shotgunIcon.visible = true;
+        } else {
+            this.shotgunIcon.visible = false;
         }
     }
 };

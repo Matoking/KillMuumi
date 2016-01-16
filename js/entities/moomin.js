@@ -134,6 +134,14 @@ Moomin.prototype.update = function() {
             }
         }
     }
+    
+    if (this.wandering) {
+        if (((this.body.blocked.left && this.direction === "left") ||
+             (this.body.blocked.right && this.direction === "right")) &&
+             this.body.blocked.down) {
+            this.body.velocity.y = -280;
+        }
+    }
 
     // Shooting
     if (!state.player.dead && this.enemyType === MUUMIPAPPA && game.time.now > this.gunTimer + 200 && yDistance < 80) {
