@@ -5,7 +5,6 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "phaser-game", {
 
 function preload() {
     this.load.image('testiKuva', 'assets/img/shite.png');
-    this.load.image('player', 'assets/img/sankari.png');
     this.load.image('laser', 'assets/img/laaseri.png');
 
     this.load.spritesheet('tiles', 'assets/img/tiles.png', 32, 32);
@@ -21,6 +20,8 @@ function preload() {
     this.load.spritesheet('burana', 'assets/img/burana.png', 31, 9);
     this.load.spritesheet('dynamiitti', 'assets/img/dynamiitti.png', 12, 5);
     this.load.spritesheet('hella', 'assets/img/hella.png', 18, 24);
+    
+    this.load.spritesheet('player', 'assets/img/sankari.png', 23, 31);
 }
 
 function create() {
@@ -89,10 +90,12 @@ KillMuumi.GameState.prototype = {
         
         this.moominSpawn = 0;
     },
+    
     bulletHitMoomin: function (bullet, moomin) {
         moomin.damage(25);
         bullet.kill();
     },
+    
     killBullets: function (bullet, somethingElse) {
         bullet.kill();
     },
@@ -118,6 +121,7 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
 
+<<<<<<< HEAD
 
         this.moomin.update();
 
@@ -127,6 +131,10 @@ KillMuumi.GameState.prototype = {
             this.moomin.die();
         }
 
+=======
+        this.moomins.update();
+        
+>>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
         this.enemyBullets.update();
         this.moominGibs.update();
 

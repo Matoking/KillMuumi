@@ -29,10 +29,18 @@ MapLoader.prototype = {
 
             switch (gameObject.type) {
                 case "kello":
+<<<<<<< HEAD
                     var kello = game.make.sprite(objectX, objectY, "kello");
 
                     kello.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
                     kello.animations.play("idle");
+=======
+                    var clock = game.make.sprite(objectX, objectY, "kello");
+                    
+                    clock.animations.add("idle", [0,1,2,3,4,5], 8, true);
+                    clock.animations.add("idle", [0, 1, 2, 3, 4, 5], 8, true);
+                    clock.animations.play("idle");
+>>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
 
                     state.levelObstacles.add(kello);
 
@@ -46,6 +54,12 @@ MapLoader.prototype = {
                         down: false
                     };
 
+<<<<<<< HEAD
+=======
+                    console.log("Clock created at " + objectX + "x" + objectY);
+                    break;
+                    
+>>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
                 case "hella":
                     var hella = game.make.sprite(objectX, objectY, "hella");
 
@@ -60,6 +74,7 @@ MapLoader.prototype = {
                         right: false,
                         down: false
                     };
+<<<<<<< HEAD
 
                 case "amme":
                     var amme = game.make.sprite(objectX, objectY, "amme");
@@ -166,6 +181,9 @@ MapLoader.prototype = {
                         down: false
                     };
 
+=======
+                    break;
+>>>>>>> ef3ffc0b6ab5a2c87c7396b6d723c08c4c1a8715
             }
         }
     }
