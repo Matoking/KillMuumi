@@ -109,7 +109,7 @@ Player.prototype = {
             this.lasers.add(pellet);
         }
 
-        pellet.health = 8;
+        pellet.health = 4;
         pellet.body.allowGravity = false;
         pellet.body.velocity.x = this.direction === "right" ? 700 : -700;
 
@@ -125,7 +125,7 @@ Player.prototype = {
     
     laserMoominOverlap: function(laser, moomin) {
         laser.kill();
-        moomin.damage(25);
+        moomin.damage(laser.health);
     },
     
     update: function() {

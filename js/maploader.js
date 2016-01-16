@@ -26,8 +26,7 @@ MapLoader.prototype = {
 
         for (var i = 0; i < objectLayer.length; i++) {
             var gameObject = objectLayer[i];
-            console.log(gameObject);
-
+            
             var objectX = gameObject.x - (gameObject.x % 32);
             var objectY = gameObject.y - (gameObject.y % 32);
 
@@ -334,6 +333,16 @@ MapLoader.prototype = {
 
                 case "player":
                     state.player = new Player(objectX, objectY);
+                    break;
+                    
+                case "powerup_spawn":
+                    state.spawner.powerupPoints.push({x: objectX,
+                                                      y: objectY});
+                    break;
+                    
+                case "enemy_spawn":
+                    state.spawner.moominPoints.push({x: objectX,
+                                                     y: objectY});
                     break;
             }
         }

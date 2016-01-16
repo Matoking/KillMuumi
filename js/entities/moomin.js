@@ -140,6 +140,8 @@ Moomin.prototype.update = function() {
              (this.body.blocked.right && this.direction === "right")) &&
              this.body.blocked.down) {
             this.body.velocity.y = -280;
+            
+            this.body.velocity.x = this.direction === "right" ? 50 : -50;
         }
     }
 

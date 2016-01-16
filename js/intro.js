@@ -7,7 +7,7 @@ KillMuumi.IntroState.prototype = {
     create: function() {
         this.text = this.add.text(this.world.centerX, 
                                   this.world.centerY, 
-                                  "KillMuumi\nVuosisadan Muumitapposimulaattori",
+                                  "KillMuumi\nVuosisadan Muumien tapposimulaattori",
                                 {
                                     font: "24px monospace",
                                     align: "center",

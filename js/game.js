@@ -41,6 +41,11 @@ function preload() {
     this.load.spritesheet('taululaiva', 'assets/img/taululaiva.png', 21, 16);
     this.load.spritesheet('taulumetsa', 'assets/img/taulumetsa.png', 21, 17);
     this.load.spritesheet('teevee', 'assets/img/teevee.png', 30, 33);
+    
+    this.load.audio("taustamusa", ['assets/audio/taustamusa.mp3'])
+    this.load.audio("s_powerup", ['assets/audio/powerup.mp3']);
+    this.load.audio("s_burana", ['assets/audio/burana.mp3']);
+    this.load.audio("s_hit", ['assets/audio/isku.mp3']);
 }
 
 function create() {
@@ -79,9 +84,11 @@ KillMuumi.GameState.prototype = {
 
         this.levelObstacles = this.add.physicsGroup();
 
+        this.spawner = new Spawner();
+
         this.mapLoader = new MapLoader();
         this.mapLoader.loadMap("map");
-
+        
         this.moomins = this.add.physicsGroup();
 
         this.enemyBullets = this.add.physicsGroup();
@@ -178,6 +185,14 @@ KillMuumi.GameState.prototype = {
         
         this.nukeTimer = 0;
         this.nukeActive = true;
+        
+        // Audio
+        this.bgMusic = this.add.audio("taustamusa");
+        this.buranaSound = this.add.audio("s_burana");
+        this.hitSound = this.add.audio("s_hit");
+        this.powerupSound = this.add.audio("s_powerup");
+        
+        this.bgMusic.play('', 0, 1, true);
     },
             
     bulletHitMoomin: function (bullet, moomin) {
@@ -201,6 +216,8 @@ KillMuumi.GameState.prototype = {
     
     playerTouchPowerup: function(player, powerup) {
         if (powerup.powerupType === "burana") {
+            this.buranaSound.play();
+            
             this.player.health += 330;
             
             if (this.player.health > 1000) {
@@ -219,8 +236,12 @@ KillMuumi.GameState.prototype = {
             this.nukeFlash.visible = true;
             this.add.tween(this.nukeFlash).to({alpha: 1}, 250, Phaser.Easing.Linear.None, true, 0, 250, true);
         } else if (powerup.powerupType === "minigun") {
+            this.powerupSound.play();
+            
             this.player.minigunTimer = game.time.now + 30000;
         } else if (powerup.powerupType === "shotgun") {
+            this.powerupSound.play();
+            
             this.player.shotgunTimer = game.time.now + 30000;
         }
         
@@ -255,6 +276,7 @@ KillMuumi.GameState.prototype = {
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
         game.physics.arcade.overlap(this.player.sprite, this.powerups, this.playerTouchPowerup, null, this);
 
+        this.spawner.update();
         this.moomins.update();
 
         this.enemyBullets.update();
@@ -285,6 +307,12 @@ KillMuumi.GameState.prototype = {
             this.time.slowMotion = 1.0;
             
             this.nukeFlash.visible = false;
+        }
+        
+        if (this.nukeActive) {
+            this.nukeFlash.cameraOffset.x = Math.ceil(Math.random() * 10) - 10;
+            this.nukeFlash.cameraOffset.y = Math.ceil(Math.random() * 6) - 6;
+            this.nukeFlash.update();
         }
         
         if (this.player.minigunTimer > game.time.now) {
