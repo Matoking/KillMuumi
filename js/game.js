@@ -216,19 +216,19 @@ KillMuumi.GameState.prototype = {
         
         // Audio
         this.bgMusic = this.add.audio("taustamusa");
-        this.buranaSound = this.add.audio("s_burana");
+        this.buranaSound = this.add.audio("s_burana", 3);
         this.hitSound = this.add.audio("s_hit");
         this.kopSound = this.add.audio("s_kop");
-        this.powerupSound = this.add.audio("s_powerup");
+        this.powerupSound = this.add.audio("s_powerup", 0.7);
         this.doorSound = this.add.audio("s_door");
         
-        this.explosionSound = this.add.audio("s_rajahdys");
-        this.explosionTwoSound = this.add.audio("s_rajahdys2");
+        this.explosionSound = this.add.audio("s_rajahdys", 0.5);
+        this.explosionTwoSound = this.add.audio("s_rajahdys2", 0.5);
         
         this.shotgunSound = this.add.audio("s_shotgun");
         this.minigunSound = this.add.audio("s_minigun");
         this.minigunPauseSound = this.add.audio("s_minigun_pause");
-        this.laserSound = this.add.audio("s_laser");
+        this.laserSound = this.add.audio("s_laser", 0.5);
         
         this.gameOverSound = this.add.audio("s_gameover");
         
@@ -241,7 +241,7 @@ KillMuumi.GameState.prototype = {
         
         this.moominsKilled = 0;
         
-        this.bgMusic.play('', 0, 0.5, true);
+        this.bgMusic.play('', 0, 0.6, true);
     },
             
     bulletHitMoomin: function (bullet, moomin) {
