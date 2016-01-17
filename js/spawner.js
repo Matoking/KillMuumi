@@ -21,11 +21,11 @@ Spawner.prototype = {
                 // Spawn enemy
                 var point = Phaser.ArrayUtils.getRandomItem(this.moominPoints);
                 
-                var moomin = state.moomins.getFirstExists(false);
-                
                 if (state.moomins.countLiving() >= 50) {
                     return;
                 }
+                
+                var moomin = state.moomins.getFirstExists(false);
                         
                 if (moomin === null) {
                     moomin = new Moomin(point.x, point.y);

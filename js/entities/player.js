@@ -142,6 +142,8 @@ Player.prototype = {
         var state = game.state.getCurrentState();
         
         game.physics.arcade.collide(this.lasers, state.mapLayer, this.laserMapOverlap, null, this);
+        game.physics.arcade.collide(this.lasers, state.doors, this.laserMapOverlap, null, this);
+        
         game.physics.arcade.overlap(this.lasers, state.moomins, this.laserMoominOverlap, null, this);
         
         if (this.health <= 0) {
@@ -194,17 +196,26 @@ Player.prototype = {
                     
                     this.shootLaser();
                 }
-            } else {
-                if (game.time.now > this.laserTimer + (500 - this.minigunHold)) {
-                    state.minigunSound.play('', 0, 1, true, false);
+            }
+            
+            if (this.minigunTimer > game.time.now && game.time.now > this.laserTimer + (500 - this.minigunHold)) {
+                state.minigunSound.play('', 0, 1, true, false);
+
+                this.minigunHold += game.time.elapsed * 1.0;
+
+                if (this.minigunHold >= 450) {
+                    this.minigunHold = 450;
+                }
+
+                this.shootMinigun();
+                
+                if (this.shotgunTimer > game.time.now && game.time.now > this.laserTimer + 500) {
+                    // Use shotgun
+                    this.laserTimer = game.time.now;
                     
-                    this.minigunHold += game.time.elapsed * 1.0;
+                    state.shotgunSound.play();
                     
-                    if (this.minigunHold >= 450) {
-                        this.minigunHold = 450;
-                    }
-                    
-                    this.shootMinigun();
+                    this.shootShotgun();
                 }
             }
         } else {

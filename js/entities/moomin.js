@@ -38,6 +38,9 @@ function Moomin(x, y, type) {
     game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.collideWorldBounds = true;
     
+    
+    this.body.maxVelocity.y = 900;
+    this.body.deltaMax.y = 900;
     this.gunTimer = 0;
     this.followTimer = 0;
     this.wanderTimer = 0;
@@ -228,11 +231,18 @@ Moomin.prototype.update = function() {
 
     // Shooting
     if (!state.player.dead && this.enemyType === MUUMIPAPPA && game.time.now > this.gunTimer + 200 && yDistance < 80) {
-        var bullet = game.make.sprite(this.x, this.y, "bullets", 0);
+        var bullet = state.enemyBullets.getFirstExists(false);
+        
+        if (bullet === null) {
+            var bullet = game.make.sprite(this.x, this.y, "bullets", 0);
+            state.enemyBullets.add(bullet);
+        } else {
+            bullet.revive();
+            bullet.x = this.x;
+            bullet.y = this.y;
+        }
         
         this.animations.play("gun_walk");
-
-        state.enemyBullets.add(bullet);
 
         bullet.body.allowGravity = false;
 

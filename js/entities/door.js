@@ -14,6 +14,8 @@ function Door(x, y, type) {
     
     game.physics.arcade.enable(this);
     
+    this.body.setSize(4, 32, 28, 0);
+    
     this.body.allowGravity = false;
     this.body.immovable = true;
 }

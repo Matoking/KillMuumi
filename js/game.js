@@ -358,6 +358,7 @@ KillMuumi.GameState.prototype = {
         game.physics.arcade.collide(this.powerups, this.mapLayer);
 
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
+        game.physics.arcade.collide(this.enemyBullets, this.doors, this.killBullets, null, this);
 
         game.physics.arcade.overlap(this.enemyBullets, this.player.sprite, this.bulletHitPlayer, null, this);
         
