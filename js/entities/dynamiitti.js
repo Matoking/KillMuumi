@@ -1,6 +1,8 @@
 function Dynamiitti(x, y, direction) {
     Phaser.Sprite.call(this, game, x, y, "dynamiitti");
     
+    this.scale.x = 1.5;
+    this.scale.y = 1.5;
     this.animations.add("idle", [0,1,2,3,4], 8, true);
     this.animations.play("idle");
     
