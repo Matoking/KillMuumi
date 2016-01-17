@@ -52,6 +52,8 @@ function Moomin(x, y, type) {
     
     this.destroyed = false;
     this.wandering = true;
+    
+    this.speed = 80 + Math.random() * 50;
 }
 
 Moomin.prototype = Object.create(Phaser.Sprite.prototype);
@@ -177,9 +179,9 @@ Moomin.prototype.update = function() {
         }
 
         if (this.direction === "left") {
-            this.body.velocity.x = -80;
+            this.body.velocity.x = -this.speed;
         } else {
-            this.body.velocity.x = 80;
+            this.body.velocity.x = this.speed;
         }
         
         // Jump randomly while chasing
