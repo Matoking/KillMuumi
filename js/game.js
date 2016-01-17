@@ -65,6 +65,7 @@ function preload() {
     this.load.audio("s_dialog_1", ['assets/audio/muumipappa - voi ei.mp3']);
     this.load.audio("s_dialog_2", ['assets/audio/niiskuneiti - onko kaikki hyvin.mp3']);
     this.load.audio("s_dialog_3", ['assets/audio/muumipeikko - täältä tullaan.mp3']);
+    this.load.audio("s_dialog_4", ['assets/audio/hätätilanne.mp3']);
 }
 
 function create() {
@@ -116,14 +117,10 @@ KillMuumi.GameState.prototype = {
         
         
         this.enemyBullets = this.add.physicsGroup();
+        this.enemyDynamite = this.add.physicsGroup();
         
         this.powerups = this.add.physicsGroup();
-        
-        for (var i = 0; i < 10; i++) {
-            var moomin = new Moomin(Math.random() * 800,
-                    Math.random() * 1000);
-            this.moomins.add(moomin);
-        }
+        this.explosions = this.add.physicsGroup();
 
         this.moominGibs = this.add.emitter(0, 0, "moomin_gibs", 200);
         this.moominGibs.makeParticles("moomin_gibs", [0, 1, 2, 3], 200, true, true);
@@ -238,7 +235,8 @@ KillMuumi.GameState.prototype = {
         this.voiceClips = [
             this.add.audio("s_dialog_1"),
             this.add.audio("s_dialog_2"),
-            this.add.audio("s_dialog_3")
+            this.add.audio("s_dialog_3"),
+            this.add.audio("s_dialog_4")
         ];
         
         this.moominsKilled = 0;
@@ -292,6 +290,10 @@ KillMuumi.GameState.prototype = {
         }, this);
     },
     
+    dynamiteHitSomething: function(dynamite, whatItHit) {
+        dynamite.blowUp();
+    },
+    
     playerTouchPowerup: function(player, powerup) {
         if (powerup.powerupType === "burana") {
             this.buranaSound.play();
@@ -330,6 +332,10 @@ KillMuumi.GameState.prototype = {
         powerup.kill();
     },
     
+    playerTouchExplosion: function(player, explosion) {
+        this.player.health -= game.time.elapsed * 0.5;
+    },
+    
     /*
      * Peliä päivitetään n. 60 kertaa sekunnissa tässä
      */
@@ -354,6 +360,9 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.collide(this.player.sprite, this.doors, this.playerOpenDoor, null, this);
         game.physics.arcade.collide(this.moomins, this.doors);
+        
+        game.physics.arcade.collide(this.enemyDynamite, this.mapLayer, this.dynamiteHitSomething, null, this);
+        game.physics.arcade.collide(this.enemyDynamite, this.levelObstacles, this.dynamiteHitSomething, null, this);
 
         game.physics.arcade.collide(this.powerups, this.mapLayer);
 
@@ -364,6 +373,8 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.overlap(this.moomins, this.player.sprite, this.moominTouchPlayer, null, this);
         game.physics.arcade.overlap(this.player.sprite, this.powerups, this.playerTouchPowerup, null, this);
+        
+        game.physics.arcade.overlap(this.player.sprite, this.explosions, this.playerTouchExplosion, null, this);
 
         this.spawner.update();
         this.moomins.update();

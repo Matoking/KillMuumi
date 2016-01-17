@@ -151,6 +151,11 @@ Player.prototype = {
             return;
         }
         
+        if (game.input.keyboard.isDown(Phaser.KeyCode.V)) {
+            var dynamite = new Dynamiitti(this.sprite.x, this.sprite.y, this.direction);
+            state.enemyDynamite.add(dynamite);
+        }
+        
         if ((this.sprite.body.touching.down || this.sprite.body.onFloor()) &&
             this.sprite.body.deltaY() === 0 && !this.onGround) {
             this.onGround = true;
