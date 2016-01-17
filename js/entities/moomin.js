@@ -122,6 +122,7 @@ Moomin.prototype.die = function(suicide) {
         }
     } else {
         console.log("ka blew");
+        state.explosionSound.play();
         state.explosionGibs.start(true, 1500, 0, 50);
         
         var explosion = game.add.sprite(this.x - 32, this.y - 32, "explosion");
