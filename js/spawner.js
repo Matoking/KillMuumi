@@ -11,7 +11,9 @@ Spawner.prototype = {
         this.totalTime += game.time.elapsed;
         
         if (this.totalTime > this.nextSpawn) {
-            this.nextSpawn = this.totalTime + 2400 + (Math.random() * 1220);
+            var state = game.state.getCurrentState();
+            
+            this.nextSpawn = this.totalTime + 2400 + (Math.random() * 1220) - (Math.min(2000, state.moominsKilled * 90));
             
             var state = game.state.getCurrentState();
             
@@ -19,8 +21,20 @@ Spawner.prototype = {
                 // Spawn enemy
                 var point = Phaser.ArrayUtils.getRandomItem(this.moominPoints);
                 
-                var moomin = new Moomin(point.x, point.y);
-                state.moomins.add(moomin);
+                var moomin = state.moomins.getFirstExists(false);
+                
+                if (state.moomins.countLiving() >= 50) {
+                    return;
+                }
+                        
+                if (moomin === null) {
+                    moomin = new Moomin(point.x, point.y);
+                    state.moomins.add(moomin);
+                } else {
+                    moomin.revive();
+                    moomin.resetMoomin(point.x, point.y);
+                }
+                
                 console.log("Spawned moomin at " + point.x + "x" + point.y);
             } else {
                 var powerupRand = Math.ceil(Math.random() * 12);

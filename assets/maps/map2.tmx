@@ -10,7 +10,7 @@
  </layer>
  <layer name="Main Layer" width="39" height="64">
   <data encoding="base64" compression="zlib">
-   eJztmNEKwyAMRbuuexsU9v8fuwkbk6Ci5qiB5sJ9KYSctrFXu23X0vHxYzVEQoHr+bUlvpjLEl+KywJfiWslXw3XCr4Wrtl8rVwz+A4l2yi+33vUstF88XwRbBSfnHuKTcuXWo8km4bv3lk3o4ezza2b0SPUvSDHiq/vCjZaktMKm+QKssCW4grqZeutk8pxaXrsW908a0w9t9L994p8pzQfPW8jnl+rSve0mk+uhRG5EHwTrmWjJTl7v6E0W2oOLLDl5nM1W2ndUHsk2Y8wtbcc8d0g9700H70nJ/lGnBcoPsvnBUvnLCoXZpwXLLDRuUCxeS7w8lxge2jqPBfKbLQ8F9rkufDv57lQX+e5oKvzXCiz0bpCLpCic4FSay6cFSb/qea8J/q+AWdoGuk=
+   eJzt2NEKwjAMheE5550g+P4PqwWFEdqaNX/T4HogN0Lpt61bWpflXNnedRuNyCS57p+K5Nu7Ivlyrgi+mmukT+Ma4Tvi8vYddXn4NqOtl+/7HK022rdfX4SN8sl1T9msvtz7SNosvmvjOI85ps13nMccadwTqn32v68GGx3pjGKTrpQItpwrpdXWOk6m5LLMsS669Wwp6r7Vrr815DOlffR663H/jqZ2TaN98l3o0RdSXURpbXSks/UbStty6yCCrbQ+R9tq7w21R5LzEUXtLXt8N8h9L+2j9+Skr8d5gfJFPi9EOmdRfcHjvBDBRvcFyjb7Ap/ZF9g5LONmX6jbtNHexxF9QWMb1Rd+2aL2hR5z/EtfaP2mePSFCLaSI4qNzNn7gjZnOC+QofuCR3K2h6LI/1RLtWbmfQFn9hsf
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="39" height="64">
@@ -28,5 +28,38 @@
   <object name="enemy_spawn" type="enemy_spawn" x="45" y="7"/>
   <object name="enemy_spawn" type="enemy_spawn" x="1223" y="13"/>
   <object name="enemy_spawn" type="enemy_spawn" x="9" y="1994"/>
+  <object name="ovi" type="ovi" x="653" y="1840"/>
+  <object name="ovi" type="ovi" x="652" y="1679"/>
+  <object name="powerup_spawn" type="powerup_spawn" x="720" y="1454"/>
+  <object name="ovi" type="ovi" x="494" y="1841"/>
+  <object name="ovi" type="ovi" x="913" y="1677"/>
+  <object name="ovi" type="ovi" x="914" y="2000"/>
+  <object name="hella" type="hella" x="368" y="1840">
+   <ellipse/>
+  </object>
+  <object name="kello" type="kello" x="813" y="1840">
+   <ellipse/>
+  </object>
+  <object name="kello" type="kello" x="751" y="2000">
+   <ellipse/>
+  </object>
+  <object name="teevee" type="teevee" x="785" y="1677">
+   <ellipse/>
+  </object>
+  <object name="sanky" type="sanky" x="720" y="1198">
+   <ellipse/>
+  </object>
+  <object name="taululaiva" type="taululaiva" x="558" y="1010">
+   <ellipse/>
+  </object>
+  <object name="taulumetsa" type="taulumetsa" x="655" y="1005">
+   <ellipse/>
+  </object>
+  <object name="pesukone" type="pesukone" x="684" y="1358">
+   <ellipse/>
+  </object>
+  <object name="takka" type="takka" x="720" y="880">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

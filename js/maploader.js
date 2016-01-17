@@ -14,6 +14,8 @@ MapLoader.prototype = {
         state.mapLayer.resizeWorld();
         
         state.levelObstacles = game.add.physicsGroup();
+        
+        state.doors = game.add.physicsGroup();
 
         state.map.setCollision([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23], true, "Main Layer");
 
@@ -51,7 +53,7 @@ MapLoader.prototype = {
                     break;
 
                 case "takka":
-                    var takka = game.make.sprite(objectX, objectY, "takka");
+                    var takka = game.make.sprite(objectX + 8, objectY + 6, "takka");
 
                     takka.animations.add("idle", [0, 1, 2, 3, 4, 5, 6, 7, 8], 8, true);
                     takka.animations.play("idle");
@@ -169,7 +171,7 @@ MapLoader.prototype = {
                     break;
 
                 case "pesukone":
-                    var pesukone = game.make.sprite(objectX, objectY, "pesukone");
+                    var pesukone = game.make.sprite(objectX + 14, objectY + 13, "pesukone");
 
                     state.levelObstacles.add(pesukone);
 
@@ -202,7 +204,7 @@ MapLoader.prototype = {
 
 
                 case "sanky":
-                    var sanky = game.make.sprite(objectX, objectY, "sanky");
+                    var sanky = game.make.sprite(objectX, objectY + 17, "sanky");
 
                     state.levelObstacles.add(sanky);
 
@@ -333,6 +335,11 @@ MapLoader.prototype = {
 
                 case "player":
                     state.player = new Player(objectX, objectY);
+                    break;
+                    
+                case "ovi":
+                    var ovi = new Door(objectX, objectY);
+                    state.doors.add(ovi);
                     break;
                     
                 case "powerup_spawn":

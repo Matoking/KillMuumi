@@ -49,6 +49,48 @@ function Moomin(x, y, type) {
 Moomin.prototype = Object.create(Phaser.Sprite.prototype);
 Moomin.prototype.constructor = Moomin;
 
+Moomin.prototype.resetMoomin = function(x, y) {
+    this.x = x;
+    this.y = y;
+    
+    var randomNumber = Math.ceil(Math.random() * 30);
+        
+    if (randomNumber >= 1 && randomNumber <= 10) {
+        this.enemyType = MUUMIPEIKKO;
+    } else if (randomNumber >= 11 && randomNumber <= 14) {
+        this.enemyType = MUUMIPAPPA;
+    } else if (randomNumber >= 15 && randomNumber <= 21) {
+        this.enemyType = MUUMIMAMMA;
+    } else if (randomNumber >= 22 && randomNumber <= 26) {
+        this.enemyType = NIISKUNEITI;
+    } else {
+        this.enemyType = EN_MUISTA_TAMAN_TYYPIN_NIMEA;
+    }
+
+    var state = game.state.getCurrentState();
+    
+    this.health = 50;
+    this.anchor.setTo(0.5, 0.5);
+    this.direction = "right";
+    
+    this.animations.add("idle", [this.enemyType]);
+    this.animations.add("walk", [this.enemyType, this.enemyType+1], 4, true);
+    
+    this.animations.add("gun_idle", [MUUMIPAPPA_ASE]);
+    this.animations.add("gun_walk", [MUUMIPAPPA_ASE, MUUMIPAPPA_ASE+1], 4, true);
+    
+    this.animations.play("idle");
+    
+    this.body.collideWorldBounds = true;
+    
+    this.gunTimer = 0;
+    this.followTimer = 0;
+    this.wanderTimer = 0;
+    
+    this.destroyed = false;
+    this.wandering = true;
+};
+
 Moomin.prototype.die = function(suicide) {
     suicide = typeof suicide !== 'undefined' ? suicide : false;
     
@@ -71,7 +113,9 @@ Moomin.prototype.die = function(suicide) {
         console.log("ka blew");
         state.explosionGibs.start(true, 1500, 0, 50);
         
-        var explosion = game.add.sprite(this.x, this.y, "explosion");
+        var explosion = game.add.sprite(this.x - 32, this.y - 32, "explosion");
+        explosion.scale.x = 2;
+        explosion.scale.y = 2;
         explosion.animations.add("blow_up", [0,1,2,3], 12, false);
         explosion.animations.play("blow_up", 12, false, true);
     }
