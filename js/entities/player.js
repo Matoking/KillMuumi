@@ -169,12 +169,12 @@ Player.prototype = {
         
         if (game.input.keyboard.isDown(Phaser.KeyCode.LEFT)) {
             this.sprite.animations.play("walk");
-            this.sprite.body.velocity.x = -270;
+            this.sprite.body.velocity.x = -300;
             this.sprite.scale.x = -1;
             this.direction = "left";
         } else if (game.input.keyboard.isDown(Phaser.KeyCode.RIGHT)) {
             this.sprite.animations.play("walk");
-            this.sprite.body.velocity.x = 270;
+            this.sprite.body.velocity.x = 300;
             this.sprite.scale.x = 1;
             this.direction = "right";
         } else {
