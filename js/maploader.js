@@ -107,7 +107,7 @@ MapLoader.prototype = {
                     break;
 
                 case "amme":
-                    var amme = game.make.sprite(objectX, objectY, "amme");
+                    var amme = game.make.sprite(objectX, objectY+12, "amme");
 
                     state.levelObstacles.add(amme);
 
@@ -139,7 +139,7 @@ MapLoader.prototype = {
                     break;
 
                 case "kirjahylly":
-                    var kirjahylly = game.make.sprite(objectX, objectY, "kirjahylly");
+                    var kirjahylly = game.make.sprite(objectX, objectY - 13, "kirjahylly");
 
                     state.levelObstacles.add(kirjahylly);
 

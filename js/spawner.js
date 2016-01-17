@@ -22,6 +22,7 @@ Spawner.prototype = {
                 var point = Phaser.ArrayUtils.getRandomItem(this.moominPoints);
                 
                 if (state.moomins.countLiving() >= 50) {
+                    console.log("liian paljon muumeja");
                     return;
                 }
                 

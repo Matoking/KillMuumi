@@ -44,6 +44,8 @@ Dynamiitti.prototype.resetDynamiitti = function(x, y, direction) {
 Dynamiitti.prototype.blowUp = function() {
     var state = game.state.getCurrentState();
     
+    state.explosionSound.play();
+    
     var explosion = state.explosions.getFirstExists(false);
     
     if (explosion !== null) {

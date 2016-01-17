@@ -5,12 +5,12 @@
  </tileset>
  <layer name="Background Layer" width="39" height="64">
   <data encoding="base64" compression="zlib">
-   eJztmMEKgCAQBS2iU8fM///TOoaISfpchRl4LHjIYS+75hwAALzZrAUyHNYCGXD7B25lnOLghtsbLw5uuM3idomDG26zuAVxcMNtFrd43wqJM8vdMghrDUov+mbTt1azyUe11TyNv9uy1qD0om82fYtnjE+cWc5TL6w1KL3om03fRn7X44ZbT7eR//fihltPt5b7kGJHwm0Ot70gvdxS936xPlnEWRP33pCtY5I=
+   eJztmMEKwyAQBZNQeuqxRv//S9tjENGQ3RcjzsBjiUIc9uImywIAAEdevQUqfHoLVMDtGrid4ysObrgdCeLghtsobrs4uOE2ilsUBzfcRnHL561YWOs5W0ZhtaD0mrFvycnPgtfdFLLqdZ/m7/WsFpRe9K1eU2XfQn7HhMJaz/s0CKsFpRd969O3J3/X4zavW7q4Z+HJ/3txm8ctNZ7vcPOchxQzEm5juL1PxMstNdxK57bY/lnF2Qrn/gAFQGOk
   </data>
  </layer>
  <layer name="Main Layer" width="39" height="64">
   <data encoding="base64" compression="zlib">
-   eJzt2NEKwjAMheE5550g+P4PqwWFEdqaNX/T4HogN0Lpt61bWpflXNnedRuNyCS57p+K5Nu7Ivlyrgi+mmukT+Ma4Tvi8vYddXn4NqOtl+/7HK022rdfX4SN8sl1T9msvtz7SNosvmvjOI85ps13nMccadwTqn32v68GGx3pjGKTrpQItpwrpdXWOk6m5LLMsS669Wwp6r7Vrr815DOlffR663H/jqZ2TaN98l3o0RdSXURpbXSks/UbStty6yCCrbQ+R9tq7w21R5LzEUXtLXt8N8h9L+2j9+Skr8d5gfJFPi9EOmdRfcHjvBDBRvcFyjb7Ap/ZF9g5LONmX6jbtNHexxF9QWMb1Rd+2aL2hR5z/EtfaP2mePSFCLaSI4qNzNn7gjZnOC+QofuCR3K2h6LI/1RLtWbmfQFn9hsf
+   eJzt2NEKwjAMBdA555sg+P8fq0WFEtLaJrdJRnshL0LpWdcum9s2V4533bwRTJLr/q1IvtwVyce5IvhqLk9fi8vD1+Oy9vW6LHyH0jbK97uPWhval+8vhA3lo/seZdP6uPOItGl8V+E4izmWzXacxRxp3BNUefLfd4UNHeqMYqOulAg2zpUitUnH0ZRcmjn2rW0/awq1brXrlwZ5T9E+9H4bsX69qV2Tt4+ehRF9IdWFVKsNHeqUPkPRNm4fRLCV9qe3rXZuUO9IdD5Eod4tRzw3kO+9aB/6nRzpW98Lsr4Qad1QfcHieyGCDd0XznQW8qy+0Ddu9QXdOJRv9r7Quo4efaHF5tUX/tlWX/jkTH1B+kyx6AsRbCVHFBsys/eF1szwvYAMui9YhLM9Ggr5n2qpdmbeF1p4Gvs=
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="39" height="64">
@@ -27,7 +27,7 @@
   <object name="enemy_spawn" type="enemy_spawn" x="15" y="10"/>
   <object name="enemy_spawn" type="enemy_spawn" x="45" y="7"/>
   <object name="enemy_spawn" type="enemy_spawn" x="1223" y="13"/>
-  <object name="enemy_spawn" type="enemy_spawn" x="9" y="1994"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="47" y="1966"/>
   <object name="ovi" type="ovi" x="653" y="1840"/>
   <object name="ovi" type="ovi" x="652" y="1679"/>
   <object name="powerup_spawn" type="powerup_spawn" x="720" y="1454"/>
@@ -59,6 +59,24 @@
    <ellipse/>
   </object>
   <object name="takka" type="takka" x="720" y="880">
+   <ellipse/>
+  </object>
+  <object name="enemy_spawn" type="enemy_spawn" x="1039" y="1679"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="1041" y="1359"/>
+  <object name="enemy_spawn" type="enemy_spawn" x="368" y="1199"/>
+  <object name="kirjahylly" type="kirjahylly" x="722" y="719">
+   <ellipse/>
+  </object>
+  <object name="kirjahylly" type="kirjahylly" x="688" y="718">
+   <ellipse/>
+  </object>
+  <object name="kirjahylly" type="kirjahylly" x="655" y="718">
+   <ellipse/>
+  </object>
+  <object name="keittiokaappi" type="keittiokaappi" x="333" y="1808">
+   <ellipse/>
+  </object>
+  <object name="amme" type="amme" x="1004" y="1358">
    <ellipse/>
   </object>
  </objectgroup>

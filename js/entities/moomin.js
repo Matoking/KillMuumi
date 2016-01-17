@@ -44,6 +44,11 @@ function Moomin(x, y, type) {
     this.gunTimer = 0;
     this.followTimer = 0;
     this.wanderTimer = 0;
+    this.dynamiteTimer = 0;
+    
+    var state = game.state.getCurrentState();
+    
+    this.canThrowDynamite = Math.max(80, state.moominsKilled) + Math.ceil(Math.random() *  140) > 120 ? true : false;
     
     this.destroyed = false;
     this.wandering = true;
@@ -90,6 +95,8 @@ Moomin.prototype.resetMoomin = function(x, y) {
     this.followTimer = 0;
     this.wanderTimer = 0;
     this.dynamiteTimer = 0;
+    
+    this.canThrowDynamite = Math.max(80, state.moominsKilled) + Math.ceil(Math.random() *  140) > 120 ? true : false;
     
     this.destroyed = false;
     this.wandering = true;
@@ -189,18 +196,18 @@ Moomin.prototype.update = function() {
             this.animations.play("gun_walk");
         }
         
-        if (game.time.now > this.dynamiteTimer) {
-        var dynamite = state.enemyDynamite.getFirstExists(false);
+        if (game.time.now > this.dynamiteTimer && this.canThrowDynamite) {
+            var dynamite = state.enemyDynamite.getFirstExists(false);
 
-        if (dynamite !== null) {
-            dynamite.resetDynamiitti(this.x, this.y, this.direction);
-        } else {
-            dynamite = new Dynamiitti(this.x, this.y, this.direction);
-            state.enemyDynamite.add(dynamite);
+            if (dynamite !== null) {
+                dynamite.resetDynamiitti(this.x, this.y, this.direction);
+            } else {
+                dynamite = new Dynamiitti(this.x, this.y, this.direction);
+                state.enemyDynamite.add(dynamite);
+            }
+
+            this.dynamiteTimer = game.time.now + 1500 + Math.random() * 800;
         }
-
-        this.dynamiteTimer = game.time.now + 1500 + Math.random() * 800;
-    }
         
     } else {
         // Keep moving for a while even if the player is lost

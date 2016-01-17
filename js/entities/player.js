@@ -62,9 +62,9 @@ Player.prototype = {
             laser.revive();
             laser.x = this.sprite.x;
             laser.y = this.sprite.y;
-            laser.loadTexture("bullets");
+            laser.loadTexture("laser");
         } else {
-            laser = game.make.sprite(this.sprite.x, this.sprite.y, "bullets");
+            laser = game.make.sprite(this.sprite.x, this.sprite.y, "laser");
             this.lasers.add(laser);
         }
         
@@ -203,7 +203,7 @@ Player.prototype = {
                 }
             }
             
-            if (this.minigunTimer > game.time.now && game.time.now > this.laserTimer + (500 - this.minigunHold)) {
+            if (this.minigunTimer > game.time.now && game.time.now > this.laserTimer + 500) {
                 state.minigunSound.play('', 0, 1, true, false);
 
                 this.minigunHold += game.time.elapsed * 1.0;

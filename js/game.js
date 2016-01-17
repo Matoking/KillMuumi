@@ -294,6 +294,10 @@ KillMuumi.GameState.prototype = {
         dynamite.blowUp();
     },
     
+    playerHitDynamite: function(player, dynamite) {
+        dynamite.blowUp();
+    },
+    
     playerTouchPowerup: function(player, powerup) {
         if (powerup.powerupType === "burana") {
             this.buranaSound.play();
@@ -333,7 +337,7 @@ KillMuumi.GameState.prototype = {
     },
     
     playerTouchExplosion: function(player, explosion) {
-        this.player.health -= game.time.elapsed * 0.5;
+        this.player.health -= game.time.elapsed * 0.8;
     },
     
     /*
@@ -363,7 +367,9 @@ KillMuumi.GameState.prototype = {
         
         game.physics.arcade.collide(this.enemyDynamite, this.mapLayer, this.dynamiteHitSomething, null, this);
         game.physics.arcade.collide(this.enemyDynamite, this.levelObstacles, this.dynamiteHitSomething, null, this);
-
+        
+        game.physics.arcade.overlap(this.player.sprite, this.enemyDynamite, this.playerHitDynamite, null, this);
+        
         game.physics.arcade.collide(this.powerups, this.mapLayer);
 
         game.physics.arcade.collide(this.enemyBullets, this.mapLayer, this.killBullets, null, this);
