@@ -276,7 +276,7 @@ KillMuumi.GameState.prototype = {
     },
     
     playerOpenDoor: function(player, door) {
-        this.doorSound.play();
+        this.doorSound.play('', 0, 1, false, false);
         
         door.animations.play("open");
         
@@ -327,10 +327,12 @@ KillMuumi.GameState.prototype = {
             this.powerupSound.play();
             
             this.player.minigunTimer = game.time.now + 30000;
+	    this.player.shotgunTimer = 0;
         } else if (powerup.powerupType === "shotgun") {
             this.powerupSound.play();
             
             this.player.shotgunTimer = game.time.now + 30000;
+	    this.player.minigunTimer = 0;
         }
         
         powerup.kill();
